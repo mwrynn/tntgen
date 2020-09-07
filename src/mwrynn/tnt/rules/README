@@ -1,0 +1,36 @@
+The Rules Relevant to this Program:
+-----------------------------------
+
+Fifth Edition:
+--------------
+1) All attributes are 3D6 added up.
+2) Positive Adds are calculated by STR-12 + DEX-12 + LK-12. BUT only for each of those three attributes > 12
+3) Negative Adds are calculated by 9-STR + 9-DEX + 9-LK. BUT only for each of those attributes < 9
+4) Attributes in the range of 9 through 12, inclusive, do not affect adds.
+5) Dwarf multipliers: STR * 2, CON * 2, CHR * 2/3 (there is only on kind of dwarf, unlike in Deluxe)
+6) Elf multipliers: INT * 3/2, DEX * 3/2, CON * 2/3, CHR * 2
+7) Fairy multipliers: STR * 1/4, DEX * 3/2, LK * 3/2, CON * 1/4, CHR * 2
+8) Human multipliers: all are * 1
+9) Leprechaun multipliers: STR * 1/2, DEX * 3/2, IQ * 3/2, LK * 3/2
+10) Hobb multipliers: STR * 1/2, CON * 2, DEX * 3/2
+11) Rounding: Round up all results after multiplying (not sure this is correct and can't find the answer after a quick rules search, but not a big deal)
+
+Deluxe Edition:
+---------------
+1) All attributes are 3D6 added up, but Triples Add and Roll Over (TARO) - before kindred multipliers
+2) Positive Adds are calculated by STR-12 + DEX-12 + LK-12 + SPD-12. BUT only for each of those four attributes > 12
+3) There are no Negative Adds
+4) Attributes <= 12 do not affect adds.
+5) Dwarf Multipliers: there are two kinds of dwarves:
+  5a) Midgardian: STR * 2, CON * 2, CHR * 3/4
+  5b) GristleGrim: STR * 2, CON * 2, LK * 3/4
+6) Elf multipliers: CON * 2/3, DEX * 4/3, IQ * 3/2, WIZ * 3/2, CHR * 3/2
+7) Fairy multipliers: STR * 1/4, CON * 1/4, DEX * 7/4, LK * 3/2, CHR * 3/2, WIZ * 2
+8) Human multipliers: all are * 1
+9) Leprechaun multipliers: STR * 1/3, CON * 2/3, DEX * 3/2, LK * 3/2, IQ * 5/4, WIZ * 3/2
+10) Hobb multipliers: STR * 1/2, CON * 3, DEX * 3/2, LK * 3/2
+11) Rounding: For multipliers > 1, round down fractions in the result. For multpliers < 1, round up multipliers in the result.
+
+Reroll Rule:
+------------
+If your 3D6 Roll is 8 or less, before multipliers, toss it out and reroll. Repeat as necessary. Can be used with any edition. If TARO is being used, do not throw out and reroll triples such as 2+2+2=6. Reroll if TARO PLUS the rerolled value < 8 though.
