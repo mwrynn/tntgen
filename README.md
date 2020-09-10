@@ -5,8 +5,8 @@ Written in Java 1.8, but not sure offhand which other version it's compatible wi
 
 To execute:
 
-`java <number of characters to roll>`
+`java mwrynn.tnt.TntGen <number of characters to roll>`
 
 For example, to roll 1000 characters per each kindred, per each set of rules:
 
-`java 1000`
+`java mwrynn.tnt.TntGen 1000`
