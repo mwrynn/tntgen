@@ -10,9 +10,9 @@ import java.util.HashMap;
 
 public class TntGen {
     private int numRollsEach;
-    HashMap<MapKey, Long> addsMap = new HashMap();
+    HashMap<MapKey, Long> addsMap = new HashMap<>();
 
-    class MapKey {
+    static class MapKey {
         RulesSet rulesSet;
         String kindred;
         int addsValue;
@@ -26,14 +26,18 @@ public class TntGen {
         @Override
         public int hashCode()
         {
-            int result = (addsValue ^ (addsValue >>> 32));
-            result = 31 * result + (rulesSet != null ? rulesSet.hashCode() : 0);
-            result = 31 * result + (kindred != null ? kindred.hashCode() : 0);
+            int result = (addsValue ^ (addsValue >>> 16));
+            result = 15 * result + (rulesSet != null ? rulesSet.hashCode() : 0);
+            result = 15 * result + (kindred != null ? kindred.hashCode() : 0);
             return result;
         }
 
         @Override
         public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            if (!super.equals(obj)) return false;
+
             MapKey other = (MapKey)obj;
 
             return  (this.rulesSet.equals(other.rulesSet)) &&
@@ -103,14 +107,14 @@ public class TntGen {
             if (existingAddsTally != null) {
                 existingAddsTally++;
             } else {
-                existingAddsTally=1l;
+                existingAddsTally=1L;
             }
 
             addsMap.put(mapKey, existingAddsTally);
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int numRollsEach = Integer.parseInt(args[0]);
         TntGen tntGen = new TntGen();
         tntGen.generate(numRollsEach);
