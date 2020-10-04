@@ -1,6 +1,4 @@
-package mwrynn.tnt.dice;
-
-import mwrynn.tnt.rules.RulesSet;
+package org.mwrynn.tnt.dice;
 
 public class DiceRollResult {
     public boolean allSame = false;

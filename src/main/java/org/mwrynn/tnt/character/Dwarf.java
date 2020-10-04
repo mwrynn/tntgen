@@ -1,12 +1,10 @@
-package mwrynn.tnt.character;
+package org.mwrynn.tnt.character;
 
-import mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesSet;
 
 public class Dwarf extends Character {
-    Dwarf() {
-    }
-
     public Dwarf(RulesSet rulesSet) {
+        super(rulesSet);
         assert isValidInRulesSet() : "Dwarves in the Deluxe rules must be created as Gristlegrim or Midgardian.";
         this.rulesSet = rulesSet;
 

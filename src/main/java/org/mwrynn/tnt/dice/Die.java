@@ -1,4 +1,4 @@
-package mwrynn.tnt.dice;
+package org.mwrynn.tnt.dice;
 
 import java.util.concurrent.ThreadLocalRandom;
 

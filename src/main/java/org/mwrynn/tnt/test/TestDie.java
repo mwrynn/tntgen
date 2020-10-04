@@ -1,6 +1,6 @@
-package mwrynn.tnt.test;
+package org.mwrynn.tnt.test;
 
-import mwrynn.tnt.dice.Die;
+import org.mwrynn.tnt.dice.Die;
 
 public class TestDie {
     //test if we run a ton of these, the distribution is what is expected

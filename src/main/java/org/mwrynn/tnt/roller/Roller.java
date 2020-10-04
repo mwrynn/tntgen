@@ -1,10 +1,10 @@
-package mwrynn.tnt.roller;
+package org.mwrynn.tnt.roller;
 
-import mwrynn.tnt.character.Character;
-import mwrynn.tnt.character.Attribute;
-import mwrynn.tnt.dice.Dice;
-import mwrynn.tnt.dice.DiceRollResult;
-import mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.character.Attribute;
+import org.mwrynn.tnt.character.Character;
+import org.mwrynn.tnt.dice.Dice;
+import org.mwrynn.tnt.dice.DiceRollResult;
+import org.mwrynn.tnt.rules.RulesSet;
 
 public class Roller {
 

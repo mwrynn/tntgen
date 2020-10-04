@@ -1,10 +1,10 @@
-package mwrynn.tnt.character;
+package org.mwrynn.tnt.character;
 
-import mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesSet;
 
 public class Human extends Character {
     public Human(RulesSet rulesSet) {
-        this.rulesSet = rulesSet;
+        super(rulesSet);
     }
 
     public String kinName() {

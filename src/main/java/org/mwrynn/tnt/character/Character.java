@@ -1,6 +1,6 @@
-package mwrynn.tnt.character;
+package org.mwrynn.tnt.character;
 
-import mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesSet;
 
 public abstract class Character {
     public int str = 0;
@@ -24,6 +24,10 @@ public abstract class Character {
     public float wizMult = 1.0f;
 
     public RulesSet rulesSet = RulesSet.DELUXE; //default rulesSet is DELUXE
+
+    public Character(RulesSet rulesSet) {
+        this.rulesSet = rulesSet;
+    }
 
     public int getAdds() {
         if (rulesSet == RulesSet.DELUXE || rulesSet == RulesSet.DELUXE_W_LOW_REROLL) {

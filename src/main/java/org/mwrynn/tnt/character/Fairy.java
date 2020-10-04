@@ -1,13 +1,10 @@
-package mwrynn.tnt.character;
+package org.mwrynn.tnt.character;
 
-import mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesSet;
 
 public class Fairy extends Character {
-    Fairy() {
-    }
-
     public Fairy(RulesSet rulesSet) {
-        this.rulesSet = rulesSet;
+        super(rulesSet);
 
         if ( (this.rulesSet == RulesSet.FIFTH) || (this.rulesSet == RulesSet.FIFTH_W_LOW_REROLL) ) {
             strMult = 0.25f;
