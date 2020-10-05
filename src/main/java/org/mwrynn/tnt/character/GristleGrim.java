@@ -1,18 +1,16 @@
-package mwrynn.tnt.character;
+package org.mwrynn.tnt.character;
 
-import mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesSet;
 
 public class GristleGrim extends Dwarf {
-    GristleGrim() {
-    }
-
     public GristleGrim(RulesSet rulesSet) {
-        assert (rulesSet == RulesSet.DELUXE || rulesSet == RulesSet.DELUXE_W_LOW_REROLL ) : "GristleGrim Dwarves only available in the Deluxe rules.";
-        this.rulesSet = rulesSet;
+        super(rulesSet);
 
-        strMult = 2.0f;
-        conMult = 2.0f;
-        lkMult = 0.75f;
+        assert (rulesSet == RulesSet.DELUXE || rulesSet == RulesSet.DELUXE_W_LOW_REROLL ) : "GristleGrim Dwarves only available in the Deluxe rules.";
+
+        this.str.setMultiplier(2.0f);
+        this.con.setMultiplier(2.0f);
+        this.lk.setMultiplier(0.75f);
     }
 
     public String kinName() {

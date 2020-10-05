@@ -1,18 +1,16 @@
-package mwrynn.tnt.character;
+package org.mwrynn.tnt.character;
 
-import mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesSet;
 
 public class Dwarf extends Character {
-    Dwarf() {
-    }
-
     public Dwarf(RulesSet rulesSet) {
+        super(rulesSet);
         assert isValidInRulesSet() : "Dwarves in the Deluxe rules must be created as Gristlegrim or Midgardian.";
         this.rulesSet = rulesSet;
 
-        strMult = 2.0f;
-        conMult = 2.0f;
-        chrMult = 0.667f;
+        this.str.setMultiplier(2.0f);
+        this.con.setMultiplier(2.0f);
+        this.chr.setMultiplier(0.667f);
     }
 
     public String kinName() {
