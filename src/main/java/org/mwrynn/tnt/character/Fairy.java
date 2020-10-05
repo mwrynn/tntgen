@@ -7,18 +7,18 @@ public class Fairy extends Character {
         super(rulesSet);
 
         if ( (this.rulesSet == RulesSet.FIFTH) || (this.rulesSet == RulesSet.FIFTH_W_LOW_REROLL) ) {
-            strMult = 0.25f;
-            dexMult = 1.5f;
-            lkMult = 1.5f;
-            conMult = 0.25f;
-            chrMult = 2.0f;
+            this.str.setMultiplier(0.25f);
+            this.dex.setMultiplier(1.5f);
+            this.lk.setMultiplier(1.5f);
+            this.con.setMultiplier(0.25f);
+            this.chr.setMultiplier(2.0f);
         } else { //deluxe
-            strMult = 0.25f;
-            conMult = 0.25f;
-            dexMult = 1.75f;
-            lkMult = 1.5f;
-            chrMult = 1.5f;
-            wizMult = 2.0f;
+            this.str.setMultiplier(0.25f);
+            this.con.setMultiplier(0.25f);
+            this.dex.setMultiplier(1.75f);
+            this.lk.setMultiplier(1.5f);
+            this.chr.setMultiplier(1.5f);
+            this.wiz.setMultiplier(2.0f);
         }
     }
 

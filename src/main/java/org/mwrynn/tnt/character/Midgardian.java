@@ -7,9 +7,9 @@ public class Midgardian extends Dwarf {
         super(rulesSet);
         assert (rulesSet == RulesSet.DELUXE || rulesSet == RulesSet.DELUXE_W_LOW_REROLL ) : "Midgardian Dwarves only available in the Deluxe rules.";
 
-        strMult = 2.0f;
-        conMult = 2.0f;
-        chrMult = 0.75f;
+        this.str.setMultiplier(2.0f);
+        this.con.setMultiplier(2.0f);
+        this.chr.setMultiplier(0.75f);
     }
 
     public String kinName() {

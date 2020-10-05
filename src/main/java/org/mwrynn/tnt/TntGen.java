@@ -12,6 +12,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,18 +26,16 @@ public class TntGen {
 
     class RulesPlusKin {
         RulesSet rulesSet;
-        String kindred;
+        Kin kin;
 
-        RulesPlusKin(RulesSet rulesSet, String kindred) {
+        RulesPlusKin(RulesSet rulesSet, Kin kin) {
             this.rulesSet = rulesSet;
-            this.kindred = kindred;
+            this.kin = kin;
         }
 
         @Override
         public int hashCode() {
-            int result = (rulesSet != null ? rulesSet.hashCode() : 0);
-            result = 15 * result + (kindred != null ? kindred.hashCode() : 0);
-            return result;
+            return Objects.hash(rulesSet, kin);
         }
 
         @Override
@@ -47,7 +46,7 @@ public class TntGen {
             RulesPlusKin other = (RulesPlusKin)obj;
 
             return  (this.rulesSet.equals(other.rulesSet)) &&
-                    (this.kindred.equals(other.kindred));
+                    (this.kin.equals(other.kin));
         }
 
     }
@@ -63,7 +62,7 @@ public class TntGen {
 
         @Override
         public int hashCode() {
-            return (addsValue ^ (addsValue >>> 16)) + rulesPlusKind.hashCode();
+            return Objects.hash(addsValue, rulesPlusKind);
         }
 
         @Override
@@ -73,13 +72,12 @@ public class TntGen {
 
             MapKey other = (MapKey)obj;
 
-            return  (this.rulesPlusKind.rulesSet.equals(other.rulesPlusKind.rulesSet)) &&
-                    (this.rulesPlusKind.kindred.equals(other.rulesPlusKind.kindred)) &&
+            return  (this.rulesPlusKind.equals(other.rulesPlusKind)) &&
                     (this.addsValue == other.addsValue);
         }
 
         public String toString() {
-            return rulesPlusKind.rulesSet + "," + rulesPlusKind.kindred + "," + addsValue;
+            return rulesPlusKind.rulesSet + "," + rulesPlusKind.kin + "," + addsValue;
         }
     }
 
@@ -87,7 +85,7 @@ public class TntGen {
         ArrayList<RulesPlusKin> rulesKinList = new ArrayList<>();
         for (RulesSet rulesSet : RulesSet.values()) {
             for (Kin kin : Kin.values()) {
-                rulesKinList.add(new RulesPlusKin(rulesSet, kin.toString()));
+                rulesKinList.add(new RulesPlusKin(rulesSet, kin));
             }
         }
         return rulesKinList;
@@ -103,12 +101,13 @@ public class TntGen {
             executorService.execute(() -> {
                 try {
                     Character c;
-                    Class<?> clazz = Class.forName(KIN_CLASS_PREFIX + rulesKin.kindred);
+
+                    Class<?> clazz = rulesKin.kin.getKinClass();
                     Constructor<?> ctor = clazz.getConstructor(RulesSet.class);
                     c = (Character)ctor.newInstance(rulesKin.rulesSet);
 
-                    generateLoop(c);
-                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException e) {
+                    generateLoop(c, rulesKin);
+                } catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException e) {
                     e.printStackTrace();
                     return;
                 }
@@ -130,26 +129,30 @@ public class TntGen {
         addsMap.forEach((key,value) -> System.out.println(key + "," + value));
     }
 
-    private void generateLoop(Character c) {
-        Roller roller;
+    private void generateLoop(Character c, RulesPlusKin rulesKin) {
         Dice dice = new Dice(3, 6);
-
-        if (!c.isValidInRulesSet()) {
-            return;
-        }
+        Roller roller = new Roller(rulesKin.rulesSet, dice);
+        RulesPlusKin rulePlusKin = new RulesPlusKin(rulesKin.rulesSet, rulesKin.kin);
 
         for (int i = 0; i < tntOptions.getNumRolls(); i++) {
-            roller = new Roller(c.rulesSet, c, dice);
-            roller.rollAllAttributes();
-            MapKey mapKey = new MapKey(new RulesPlusKin(c.rulesSet, c.kinName()), c.getAdds());
+            c.setStr(roller.rollAttribute(c.getChr()));
+            c.setDex(roller.rollAttribute(c.getDex()));
+            c.setCon(roller.rollAttribute(c.getCon()));
+            c.setSpd(roller.rollAttribute(c.getSpd()));
+            c.setIq(roller.rollAttribute(c.getIq()));
+            c.setLk(roller.rollAttribute(c.getChr()));
+            c.setChr(roller.rollAttribute(c.getStr()));
+            c.setWiz(roller.rollAttribute(c.getChr()));
+
+            MapKey mapKey = new MapKey(rulePlusKin, c.getAdds());
+
             Long existingAddsTally = addsMap.get(mapKey);
 
             if (existingAddsTally != null) {
                 existingAddsTally++;
             } else {
-                existingAddsTally=1L;
+                existingAddsTally = 1L;
             }
-
             addsMap.put(mapKey, existingAddsTally);
         }
     }

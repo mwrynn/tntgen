@@ -1,22 +1,20 @@
 package org.mwrynn.tnt.roller;
 
-import org.mwrynn.tnt.character.Attribute;
+import org.mwrynn.tnt.character.attribute.Attribute;
+import org.mwrynn.tnt.character.attribute.AttributeName;
 import org.mwrynn.tnt.character.Character;
 import org.mwrynn.tnt.dice.Dice;
 import org.mwrynn.tnt.dice.DiceRollResult;
 import org.mwrynn.tnt.rules.RulesSet;
 
 public class Roller {
-
-    private Character character;
     private RulesSet rulesSet;
     private Dice dice;
-    private static final int REROLL_IF_LESS_THAN_THIS = 9;
+    private static final int REROLL_IF_LESS_THAN_THIS = 9; //for *_REROLL rulesSets only (rerollIfTooLow == false)
     private boolean rerollIfTooLow = false;
 
-    public Roller(RulesSet rulesSet, Character character, Dice dice) {
+    public Roller(RulesSet rulesSet, Dice dice) {
         this.rulesSet = rulesSet;
-        this.character = character;
         this.dice = dice;
 
         if ( (rulesSet == RulesSet.DELUXE_W_LOW_REROLL) || (rulesSet == RulesSet.FIFTH_W_LOW_REROLL) ) {
@@ -24,18 +22,20 @@ public class Roller {
         }
     }
 
+    /*
     public void rollAllAttributes() {
-        character.str = rollAttribute(Attribute.STR);
-        character.dex = rollAttribute(Attribute.DEX);
-        character.con = rollAttribute(Attribute.CON);
-        character.spd = rollAttribute(Attribute.SPD);
-        character.iq = rollAttribute(Attribute.IQ);
-        character.lk = rollAttribute(Attribute.LK);
-        character.chr = rollAttribute(Attribute.CHR);
-        character.spd = rollAttribute(Attribute.SPD);
+        character.str = rollAttribute(AttributeName.STR);
+        character.dex = rollAttribute(AttributeName.DEX);
+        character.con = rollAttribute(AttributeName.CON);
+        character.spd = rollAttribute(AttributeName.SPD);
+        character.iq = rollAttribute(AttributeName.IQ);
+        character.lk = rollAttribute(AttributeName.LK);
+        character.chr = rollAttribute(AttributeName.CHR);
+        character.spd = rollAttribute(AttributeName.SPD);
     }
+    */
 
-    private int rollAttribute(Attribute attribute) {
+    public Attribute rollAttribute(Attribute attribute) {
         int runningTotal = 0;
         DiceRollResult diceRollResult;
         int finalRoll;
@@ -54,14 +54,12 @@ public class Roller {
             } while (shouldReroll(runningTotal)); //reroll if result is too low
 
 
-
         } else if (rulesSet == RulesSet.DELUXE) {
             do {
                 diceRollResult = rollDice();
                 runningTotal += diceRollResult.totalRolled;
             }
             while (diceRollResult.allSame); //TARO
-
 
 
         } else if (rulesSet == RulesSet.FIFTH_W_LOW_REROLL) {
@@ -71,51 +69,13 @@ public class Roller {
             } while (shouldReroll(runningTotal)); //reroll if result is too low, but apply TARO first
 
 
-
         } else { // FIFTH
             diceRollResult = rollDice();
             runningTotal = diceRollResult.totalRolled;
         }
 
-        switch (attribute) {
-            case STR:
-                mult = character.strMult;
-                break;
-            case DEX:
-                mult = character.dexMult;
-                break;
-            case CON:
-                mult = character.conMult;
-                break;
-            case SPD:
-                mult = character.spdMult;
-                break;
-            case IQ:
-                mult = character.iqMult;
-                break;
-            case LK:
-                mult = character.lkMult;
-                break;
-            case CHR:
-                mult = character.chrMult;
-                break;
-            case WIZ:
-                mult = character.wizMult;
-        }
-
-        float runningTotalMultiplied = (float)runningTotal * mult;
-
-        if (rulesSet == RulesSet.DELUXE || rulesSet == RulesSet.DELUXE_W_LOW_REROLL) {
-            if (mult > 1) { //round down "good" multipliers in Deluxe
-                finalRoll = (int)Math.floor(runningTotalMultiplied);
-            } else { //round up "bad" multipliers in Deluxe
-                finalRoll = (int)Math.ceil(runningTotalMultiplied);
-            }
-        } else { //fifth edition round up: TODO verify this
-            finalRoll = (int)Math.ceil(runningTotalMultiplied);
-        }
-
-        return finalRoll;
+        attribute.setValue(runningTotal);
+        return attribute;
     }
 
     private DiceRollResult rollDice() {

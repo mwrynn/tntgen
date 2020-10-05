@@ -8,16 +8,16 @@ public class Elf extends Character {
         super(rulesSet);
 
         if ((this.rulesSet == RulesSet.FIFTH) || (this.rulesSet == RulesSet.FIFTH_W_LOW_REROLL)) {
-            iqMult = 1.5f;
-            dexMult = 1.5f;
-            conMult = 0.667f;
-            chrMult = 2.0f;
+            this.iq.setMultiplier(1.5f);
+            this.dex.setMultiplier(1.5f);
+            this.con.setMultiplier(0.667f);
+            this.chr.setMultiplier(2.0f);
         } else { // deluxe
-            conMult = 0.667f;
-            dexMult = 1.333f;
-            iqMult = 1.5f;
-            wizMult = 1.5f;
-            chrMult = 1.5f;
+            this.con.setMultiplier(0.667f);
+            this.dex.setMultiplier(1.333f);
+            this.iq.setMultiplier(1.5f);
+            this.wiz.setMultiplier(1.5f);
+            this.chr.setMultiplier(1.5f);
         }
     }
 

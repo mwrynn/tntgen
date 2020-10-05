@@ -7,17 +7,17 @@ public class Leprechaun extends Character {
         super(rulesSet);
 
         if ((this.rulesSet == RulesSet.FIFTH) || (this.rulesSet == RulesSet.FIFTH_W_LOW_REROLL)) {
-            strMult = 0.5f;
-            dexMult = 1.5f;
-            iqMult = 1.5f;
-            lkMult = 1.5f;
+            this.str.setMultiplier(0.5f);
+            this.dex.setMultiplier(1.5f);
+            this.iq.setMultiplier(1.5f);
+            this.lk.setMultiplier(1.5f);
         } else { //deluxe
-            strMult = 0.333f;
-            conMult = 0.667f;
-            dexMult = 1.5f;
-            lkMult = 1.5f;
-            iqMult = 1.25f;
-            wizMult = 1.5f;
+            this.str.setMultiplier(0.333f);
+            this.con.setMultiplier(0.667f);
+            this.dex.setMultiplier(1.5f);
+            this.lk.setMultiplier(1.5f);
+            this.iq.setMultiplier(1.25f);
+            this.wiz.setMultiplier(1.5f);
         }
     }
 
