@@ -11,7 +11,7 @@ usage: tntgen
   
 Output format:  
 ```
-\<edition\>,\<kindred\>,\<combat-adds\>,\<total\>  
+<edition>,<kindred>,<combat-adds>,<total>  
 ```
   
 For example:  
