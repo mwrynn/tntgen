@@ -8,12 +8,25 @@ usage: tntgen
  -r,--rolls <arg>      number of rolls per combination of rules and kindred  
  -p,--parallel <arg>   number of parallel threads  
  -t,--time             display execution time  
-    
+  
 Output format:  
-<edition>,<kindred>,<combat-adds>,<total>  
-   
+```
+\<edition\>,\<kindred\>,\<combat-adds\>,\<total\>  
+```
+  
 For example:  
+```
 FIFTH,Hobb,3,8829
 DELUXE_W_LOW_REROLL,Fairy,100,1
 DELUXE,Midgardian,56,81
+```
 
+If the --time option is set, the final line of output will be the execution time:
+```
+execution time: <time-in-milliseconds> ms
+```
+
+For example:
+```
+execution time: 858 ms
+```
