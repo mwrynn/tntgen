@@ -4,6 +4,7 @@ public class TntOptions {
     private int numRolls = 0;
     private int numThreads = 0;
     private boolean outputTiming = false;
+    private String delimiter = ",";
 
     public TntOptions(int numRolls, int numThreads, boolean outputTiming) {
         this.numRolls = numRolls;
@@ -37,6 +38,14 @@ public class TntOptions {
 
     public boolean getOutputTiming() {
         return outputTiming;
+    }
+
+    public void setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
+    }
+
+    public String getDelimiter() {
+        return delimiter;
     }
 
 }

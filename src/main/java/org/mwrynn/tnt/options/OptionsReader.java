@@ -18,6 +18,7 @@ public class OptionsReader {
         options.addRequiredOption("r", "rolls", true,"number of rolls per combination of rules and kindred");
         options.addOption("t", "time",false, "display execution time");
         options.addOption("p",  "parallel", true, "number of parallel threads");
+        options.addOption("d",  "delimiter", true, "output field delimiter; default is ,");
 
         TntOptions tntOptions = new TntOptions();
 
@@ -35,6 +36,10 @@ public class OptionsReader {
 
             if (line.hasOption("time")) {
                 tntOptions.setOutputTiming(true);
+            }
+
+            if (line.hasOption("delimiter")) {
+                tntOptions.setDelimiter((line.getOptionValue("delimiter")));
             }
         }
         catch( ParseException exp ) {

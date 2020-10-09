@@ -77,7 +77,7 @@ public class TntGen {
         }
 
         public String toString() {
-            return rulesPlusKind.rulesSet + "," + rulesPlusKind.kin + "," + addsValue;
+            return rulesPlusKind.rulesSet + tntOptions.getDelimiter() + rulesPlusKind.kin + tntOptions.getDelimiter() + addsValue;
         }
     }
 
@@ -126,7 +126,7 @@ public class TntGen {
     }
 
     private void printResults() {
-        addsMap.forEach((key,value) -> System.out.println(key + "," + value));
+        addsMap.forEach((key,value) -> System.out.println(key + tntOptions.getDelimiter() + value));
     }
 
     private void generateLoop(Character c, RulesPlusKin rulesKin) {
