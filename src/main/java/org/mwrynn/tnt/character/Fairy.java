@@ -6,13 +6,13 @@ public class Fairy extends Character {
     public Fairy(RulesSet rulesSet) {
         super(rulesSet);
 
-        if ( (this.rulesSet == RulesSet.FIFTH) || (this.rulesSet == RulesSet.FIFTH_W_LOW_REROLL) ) {
+        if (this.rulesSet == RulesSet.FIFTH) {
             this.str.setMultiplier(0.25f);
             this.dex.setMultiplier(1.5f);
             this.lk.setMultiplier(1.5f);
             this.con.setMultiplier(0.25f);
             this.chr.setMultiplier(2.0f);
-        } else { //deluxe
+        } else { //DELUXE
             this.str.setMultiplier(0.25f);
             this.con.setMultiplier(0.25f);
             this.dex.setMultiplier(1.75f);

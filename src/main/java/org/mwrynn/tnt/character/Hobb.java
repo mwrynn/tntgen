@@ -6,11 +6,11 @@ public class Hobb extends Character {
     public Hobb(RulesSet rulesSet) {
         super(rulesSet);
 
-        if ((this.rulesSet == RulesSet.FIFTH) || (this.rulesSet == RulesSet.FIFTH_W_LOW_REROLL)) {
+        if (this.rulesSet == RulesSet.FIFTH) {
             this.str.setMultiplier(0.5f);
             this.con.setMultiplier(2.0f);
             this.dex.setMultiplier(1.5f);
-        } else { //deluxe
+        } else { //DELUXE
             this.str.setMultiplier(0.5f);
             this.con.setMultiplier(2.0f);
             this.dex.setMultiplier(1.5f);

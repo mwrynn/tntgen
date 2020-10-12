@@ -6,6 +6,7 @@ import org.mwrynn.tnt.dice.Dice;
 import org.mwrynn.tnt.options.OptionsReader;
 import org.mwrynn.tnt.options.TntOptions;
 import org.mwrynn.tnt.roller.Roller;
+import org.mwrynn.tnt.rules.OptionalRules;
 import org.mwrynn.tnt.rules.RulesSet;
 import org.mwrynn.tnt.stat.Stat;
 import org.mwrynn.tnt.stat.StatNames;
@@ -34,16 +35,18 @@ public class TntGen {
 
     class RulesPlusKin implements Comparable<RulesPlusKin> {
         RulesSet rulesSet;
+        OptionalRules optionalRules;
         Kin kin;
 
-        RulesPlusKin(RulesSet rulesSet, Kin kin) {
+        RulesPlusKin(RulesSet rulesSet, OptionalRules optionalRules, Kin kin) {
             this.rulesSet = rulesSet;
+            this.optionalRules = optionalRules;
             this.kin = kin;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(rulesSet, kin);
+            return Objects.hash(rulesSet, optionalRules, kin);
         }
 
         @Override
@@ -54,6 +57,7 @@ public class TntGen {
             RulesPlusKin other = (RulesPlusKin)obj;
 
             return  (this.rulesSet.equals(other.rulesSet)) &&
+                    (this.optionalRules.equals(other.optionalRules)) &&
                     (this.kin.equals(other.kin));
         }
 
@@ -68,6 +72,13 @@ public class TntGen {
             if (this.rulesSet.compareTo(other.rulesSet) > 0) {
                 return 1;
             }
+            if (this.optionalRules.compareTo(other.optionalRules) < 0) {
+                return -1;
+            }
+            if (this.optionalRules.compareTo(other.optionalRules) > 0) {
+                return 1;
+            }
+
             return this.kin.compareTo(other.kin);
         }
     }
@@ -100,8 +111,8 @@ public class TntGen {
         @Override
         public String toString() {
             //format is basically RULESSET,KIN,STATNAME,STATVAL but delimiter can be different
-            return rulesPlusKin.rulesSet + tntOptions.getDelimiter() + rulesPlusKin.kin + tntOptions.getDelimiter() +
-                    stat.getStatName() + tntOptions.getDelimiter() + stat.getValue();
+            return rulesPlusKin.rulesSet + tntOptions.getDelimiter() + rulesPlusKin.optionalRules + tntOptions.getDelimiter() +
+                    rulesPlusKin.kin + tntOptions.getDelimiter() + stat.getStatName() + tntOptions.getDelimiter() + stat.getValue();
         }
 
         @Override
@@ -120,8 +131,10 @@ public class TntGen {
     private List<RulesPlusKin> makeAllRulesKinCombos() {
         ArrayList<RulesPlusKin> rulesKinList = new ArrayList<>();
         for (RulesSet rulesSet : RulesSet.values()) {
-            for (Kin kin : Kin.values()) {
-                rulesKinList.add(new RulesPlusKin(rulesSet, kin));
+            for (OptionalRules optionalRules : OptionalRules.values()) {
+                for (Kin kin : Kin.values()) {
+                    rulesKinList.add(new RulesPlusKin(rulesSet, optionalRules, kin));
+                }
             }
         }
         return rulesKinList;
@@ -174,20 +187,18 @@ public class TntGen {
         );
 
         if(tntOptions.getHeader()) {
-            System.out.println("RULESSET" + tntOptions.getDelimiter() + "KIN" + tntOptions.getDelimiter() + "STAT" + tntOptions.getDelimiter() + "COUNT");
+            System.out.println("RULESSET" + tntOptions.getDelimiter() + "OPTIONALRULES" + tntOptions.getDelimiter() + "KIN" + tntOptions.getDelimiter() + "STAT" + tntOptions.getDelimiter() + "COUNT");
         }
 
         for (Map.Entry<MapKey, Long> entry : mapSorted.entrySet()) {
             System.out.println(entry.getKey() + tntOptions.getDelimiter() + entry.getValue());
         }
-
-        //collect.forEach((key,value) -> System.out.println(key + tntOptions.getDelimiter() + value));
     }
 
     private void generateLoop(Character c, RulesPlusKin rulesKin) {
         Dice dice = new Dice(3, 6);
-        Roller roller = new Roller(rulesKin.rulesSet, dice);
-        RulesPlusKin rulesPlusKin = new RulesPlusKin(rulesKin.rulesSet, rulesKin.kin);
+        Roller roller = new Roller(rulesKin.rulesSet, rulesKin.optionalRules, dice);
+        RulesPlusKin rulesPlusKin = new RulesPlusKin(rulesKin.rulesSet, rulesKin.optionalRules, rulesKin.kin);
 
         for (int i = 0; i < tntOptions.getNumRolls(); i++) {
             c.setStr(roller.rollAttribute(c.getStr()));

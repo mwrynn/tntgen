@@ -18,6 +18,6 @@ public class Dwarf extends Character {
     }
 
     public boolean isValidInRulesSet() {
-        return (rulesSet != RulesSet.DELUXE) && (rulesSet != RulesSet.DELUXE_W_LOW_REROLL);
+        return rulesSet != RulesSet.DELUXE;
     }
 }

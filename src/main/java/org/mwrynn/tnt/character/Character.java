@@ -30,9 +30,9 @@ public abstract class Character {
     }
 
     public int getAdds() {
-        if (rulesSet == RulesSet.DELUXE || rulesSet == RulesSet.DELUXE_W_LOW_REROLL) {
+        if (rulesSet == RulesSet.DELUXE) {
             return Math.max(str.getValue(), 12)-12 + Math.max(dex.getValue(), 12)-12 + Math.max(lk.getValue(), 12)-12 + Math.max(spd.getValue(), 12)-12;
-        } else { //fifth edition
+        } else { //FIFTH
             return ( Math.max(str.getValue(), 12)-12 + Math.max(dex.getValue(), 12)-12 + Math.max(lk.getValue(), 12)-12 ) //positive adds
             - ( 9-Math.min(str.getValue(), 9) + 9-Math.min(dex.getValue(), 9) + 9-Math.min(lk.getValue(), 9)); //negative adds
         }
