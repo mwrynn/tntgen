@@ -1,5 +1,5 @@
 package org.mwrynn.tnt.rules;
 
 public enum RulesSet {
-    FIFTH, DELUXE, FIFTH_W_LOW_REROLL, DELUXE_W_LOW_REROLL
+    DELUXE, DELUXE_W_LOW_REROLL, FIFTH, FIFTH_W_LOW_REROLL
 }

@@ -81,4 +81,5 @@ public enum Kin {
     };
 
     public abstract Class getKinClass();
+
 }

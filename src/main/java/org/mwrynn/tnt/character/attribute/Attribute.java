@@ -27,15 +27,15 @@ public class Attribute {
         return value;
     }
 
-    public void setValue(int unmultipliedVlaue) {
+    public void setValue(int unmultipliedValue) {
         if (rulesSet == RulesSet.DELUXE || rulesSet == RulesSet.DELUXE_W_LOW_REROLL) {
             if (multiplier > 1) { //round down "good" multipliers in Deluxe
-                value = (int)Math.floor(unmultipliedVlaue);
+                value = (int)Math.floor(unmultipliedValue * multiplier);
             } else { //round up "bad" multipliers in Deluxe
-                value = (int)Math.ceil(unmultipliedVlaue);
+                value = (int)Math.ceil(unmultipliedValue * multiplier);
             }
         } else { //fifth edition round up: TODO verify this
-            value = (int)Math.ceil(unmultipliedVlaue);
+            value = (int)Math.ceil(unmultipliedValue * multiplier);
         }
     }
 
