@@ -7,24 +7,32 @@ import org.mwrynn.tnt.options.OptionsReader;
 import org.mwrynn.tnt.options.TntOptions;
 import org.mwrynn.tnt.roller.Roller;
 import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.stat.Stat;
+import org.mwrynn.tnt.stat.StatNames;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.mwrynn.tnt.character.attribute.AttributeName.*;
 
 public class TntGen {
     private TntOptions tntOptions;
     private static final String KIN_CLASS_PREFIX = "org.mwrynn.tnt.character.";
 
-    ConcurrentHashMap<MapKey, Long> addsMap = new ConcurrentHashMap<>();
+    ConcurrentHashMap<MapKey, Long> statsMap = new ConcurrentHashMap<>();
 
-    class RulesPlusKin {
+    class RulesPlusKin implements Comparable<RulesPlusKin> {
         RulesSet rulesSet;
         Kin kin;
 
@@ -49,20 +57,33 @@ public class TntGen {
                     (this.kin.equals(other.kin));
         }
 
+        @Override
+        public int compareTo(RulesPlusKin other) {
+            if (this.equals(other)) {
+                return 0;
+            }
+            if (this.rulesSet.compareTo(other.rulesSet) < 0) {
+                return -1;
+            }
+            if (this.rulesSet.compareTo(other.rulesSet) > 0) {
+                return 1;
+            }
+            return this.kin.compareTo(other.kin);
+        }
     }
 
-    class MapKey {
-        RulesPlusKin rulesPlusKind;
-        int addsValue;
+    class MapKey implements Comparable<MapKey> {
+        RulesPlusKin rulesPlusKin;
+        Stat stat;
 
-        MapKey(RulesPlusKin rulesPlusKind, int addsValue) {
-            this.rulesPlusKind = rulesPlusKind;
-            this.addsValue = addsValue;
+        MapKey(RulesPlusKin rulesPlusKin, Stat stat) {
+            this.rulesPlusKin = rulesPlusKin;
+            this.stat = stat;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(addsValue, rulesPlusKind);
+            return Objects.hash(stat, rulesPlusKin);
         }
 
         @Override
@@ -72,12 +93,27 @@ public class TntGen {
 
             MapKey other = (MapKey)obj;
 
-            return  (this.rulesPlusKind.equals(other.rulesPlusKind)) &&
-                    (this.addsValue == other.addsValue);
+            return  (this.rulesPlusKin.equals(other.rulesPlusKin)) &&
+                    (this.stat.equals(other.stat));
         }
 
+        @Override
         public String toString() {
-            return rulesPlusKind.rulesSet + tntOptions.getDelimiter() + rulesPlusKind.kin + tntOptions.getDelimiter() + addsValue;
+            //format is basically RULESSET,KIN,STATNAME,STATVAL but delimiter can be different
+            return rulesPlusKin.rulesSet + tntOptions.getDelimiter() + rulesPlusKin.kin + tntOptions.getDelimiter() +
+                    stat.getStatName() + tntOptions.getDelimiter() + stat.getValue();
+        }
+
+        @Override
+        public int compareTo(MapKey other) {
+            if(this.equals(other)) {
+                return 0;
+            }
+            if(this.rulesPlusKin.equals(other.rulesPlusKin)) {
+                return this.stat.compareTo(other.stat);
+            }
+
+            return this.rulesPlusKin.compareTo(other.rulesPlusKin);
         }
     }
 
@@ -106,7 +142,9 @@ public class TntGen {
                     Constructor<?> ctor = clazz.getConstructor(RulesSet.class);
                     c = (Character)ctor.newInstance(rulesKin.rulesSet);
 
-                    generateLoop(c, rulesKin);
+                    if(c.isValidInRulesSet()) {
+                        generateLoop(c, rulesKin);
+                    }
                 } catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException e) {
                     e.printStackTrace();
                     return;
@@ -126,34 +164,93 @@ public class TntGen {
     }
 
     private void printResults() {
-        addsMap.forEach((key,value) -> System.out.println(key + tntOptions.getDelimiter() + value));
+        Stream<Map.Entry<MapKey, Long>> stream = statsMap
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey());
+
+        Map<MapKey, Long> mapSorted = stream.collect(
+                Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new)
+        );
+
+        for (Map.Entry<MapKey, Long> entry : mapSorted.entrySet()) {
+            System.out.println(entry.getKey() + tntOptions.getDelimiter() + entry.getValue());
+        }
+
+        //collect.forEach((key,value) -> System.out.println(key + tntOptions.getDelimiter() + value));
     }
 
     private void generateLoop(Character c, RulesPlusKin rulesKin) {
         Dice dice = new Dice(3, 6);
         Roller roller = new Roller(rulesKin.rulesSet, dice);
-        RulesPlusKin rulePlusKin = new RulesPlusKin(rulesKin.rulesSet, rulesKin.kin);
+        RulesPlusKin rulesPlusKin = new RulesPlusKin(rulesKin.rulesSet, rulesKin.kin);
 
         for (int i = 0; i < tntOptions.getNumRolls(); i++) {
-            c.setStr(roller.rollAttribute(c.getChr()));
+            c.setStr(roller.rollAttribute(c.getStr()));
             c.setDex(roller.rollAttribute(c.getDex()));
             c.setCon(roller.rollAttribute(c.getCon()));
             c.setSpd(roller.rollAttribute(c.getSpd()));
             c.setIq(roller.rollAttribute(c.getIq()));
-            c.setLk(roller.rollAttribute(c.getChr()));
+            c.setLk(roller.rollAttribute(c.getLk()));
             c.setChr(roller.rollAttribute(c.getStr()));
             c.setWiz(roller.rollAttribute(c.getChr()));
 
-            MapKey mapKey = new MapKey(rulePlusKin, c.getAdds());
+            collectAllStats(c, rulesPlusKin);
+        }
+    }
 
-            Long existingAddsTally = addsMap.get(mapKey);
+    private void collectAllStats(Character c, RulesPlusKin rulesPlusKin) {
+        for(String stat : tntOptions.getStatNameList()) {
+            MapKey mapKey = null;
+            switch (stat) {
+                case "STR":
+                    mapKey = new MapKey(rulesPlusKin, new Stat(STR.toString(), c.getStr().getValue()));
+                    break;
 
-            if (existingAddsTally != null) {
-                existingAddsTally++;
-            } else {
-                existingAddsTally = 1L;
+                case "DEX":
+                    mapKey = new MapKey(rulesPlusKin, new Stat(DEX.toString(), c.getDex().getValue()));
+                    break;
+
+                case "CON":
+                    mapKey = new MapKey(rulesPlusKin, new Stat(CON.toString(), c.getCon().getValue()));
+                    break;
+
+                case "SPD":
+                    mapKey = new MapKey(rulesPlusKin, new Stat(SPD.toString(), c.getSpd().getValue()));
+                    break;
+
+                case "IQ":
+                     mapKey = new MapKey(rulesPlusKin, new Stat(IQ.toString(), c.getIq().getValue()));
+                    break;
+
+                case "LK":
+                    mapKey = new MapKey(rulesPlusKin, new Stat(LK.toString(), c.getLk().getValue()));
+                    break;
+
+                case "CHR":
+                    mapKey = new MapKey(rulesPlusKin, new Stat(CHR.toString(), c.getChr().getValue()));
+                    break;
+
+                case "WIZ":
+                    mapKey = new MapKey(rulesPlusKin, new Stat(WIZ.toString(), c.getWiz().getValue()));
+                    break;
+
+                case StatNames.ADDS:
+                    mapKey = new MapKey(rulesPlusKin, new Stat(StatNames.ADDS, c.getAdds()));
+                    break;
+
             }
-            addsMap.put(mapKey, existingAddsTally);
+
+            Long tally = statsMap.get(mapKey);
+
+            if (tally != null) {
+                tally++;
+            } else {
+                tally = 1L;
+            }
+
+            statsMap.put(mapKey, tally);
+
         }
     }
 
