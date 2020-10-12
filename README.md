@@ -3,24 +3,25 @@ This is a tool used for the Tunnels & Trolls, the second roleplaying game ever p
   
   
 Written in Java 1.8, but not sure offhand which other version it's compatible with. I suspect the newest feature used is ThreadLocalRandom, which was new in JDK 7.  
-  
+
 usage: tntgen
  -d,--delimiter <arg>   output field delimiter; default is ,
  -p,--parallel <arg>    number of parallel threads
  -r,--rolls <arg>       number of rolls per combination of rules and
                         kindred
  -s,--stats <arg>       the stats to collect and output
- -t,--time              display execution time  
+ -t,--time              display execution time
+ 
 Output format:  
 ```
-<edition>,<kindred>,<stat-name>,<total>  
+<rules-set>,<optional-rules>,<kindred>,<stat-name>,<total>  
 ```
   
 For example:  
 ```
-FIFTH,Hobb,3,8829
-DELUXE_W_LOW_REROLL,Fairy,100,1
-DELUXE,Midgardian,56,81
+FIFTH,NONE,Hobb,3,8829
+DELUXE,NONE,Fairy,100,1
+DELUXE,LOW_REROLL,Midgardian,56,81
 ```
 
 If the --time option is set, the final line of output will be the execution time:
