@@ -7,6 +7,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.mwrynn.tnt.stat.StatNames;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ public class OptionsReader {
         statsOption.setValueSeparator(',');
         statsOption.setType(List.class);
         options.addOption(statsOption);
+        options.addOption("h",  "header", false, "output column headers");
 
         TntOptions tntOptions = new TntOptions();
 
@@ -54,7 +56,14 @@ public class OptionsReader {
             if (line.hasOption("stats")) {
                 List<String> statStrList = Arrays.asList(line.getOptionValues("stats"));
                 tntOptions.setStatNameList(statStrList);
+            } else {
+                tntOptions.addStatName(StatNames.ADDS);
             }
+
+            if (line.hasOption("header")) {
+                tntOptions.setHeader(true);
+            }
+
 
         }
         catch( ParseException exp ) {

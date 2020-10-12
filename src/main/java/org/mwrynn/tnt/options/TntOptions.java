@@ -12,6 +12,7 @@ public class TntOptions {
     private String delimiter = ",";
     private List<String> statNameList;
     private StatNames validStatNames;
+    private boolean header = false;
 
     public TntOptions(int numRolls, int numThreads, boolean outputTiming, List<String> statNameList) {
         validStatNames = new StatNames();
@@ -58,7 +59,6 @@ public class TntOptions {
     }
 
     public void setStatNameList(List<String> statNameList) {
-        //this.statNameList = statNameList;
         for (String statName : statNameList) {
             addStatName(statName);
         }
@@ -78,5 +78,11 @@ public class TntOptions {
         return statNameList;
     }
 
+    public boolean getHeader() {
+        return header;
+    }
 
+    public void setHeader(boolean header) {
+        this.header = header;
+    }
 }

@@ -173,6 +173,10 @@ public class TntGen {
                 Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new)
         );
 
+        if(tntOptions.getHeader()) {
+            System.out.println("RULESSET" + tntOptions.getDelimiter() + "KIN" + tntOptions.getDelimiter() + "STAT" + tntOptions.getDelimiter() + "COUNT");
+        }
+
         for (Map.Entry<MapKey, Long> entry : mapSorted.entrySet()) {
             System.out.println(entry.getKey() + tntOptions.getDelimiter() + entry.getValue());
         }
