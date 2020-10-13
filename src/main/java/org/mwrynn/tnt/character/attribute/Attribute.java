@@ -28,7 +28,7 @@ public class Attribute {
     }
 
     public void setValue(int unmultipliedValue) {
-        if (rulesSet == RulesSet.DELUXE || rulesSet == RulesSet.DELUXE_W_LOW_REROLL) {
+        if (rulesSet == RulesSet.DELUXE) {
             if (multiplier > 1) { //round down "good" multipliers in Deluxe
                 value = (int)Math.floor(unmultipliedValue * multiplier);
             } else { //round up "bad" multipliers in Deluxe

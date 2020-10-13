@@ -2,6 +2,7 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.rules.RulesSet;
 
+@Deprecated
 public class GristleGrim extends Dwarf {
     public GristleGrim(RulesSet rulesSet) {
         super(rulesSet);
@@ -18,6 +19,6 @@ public class GristleGrim extends Dwarf {
     }
 
     public boolean isValidInRulesSet() {
-        return (rulesSet == RulesSet.DELUXE) || (rulesSet == RulesSet.DELUXE_W_LOW_REROLL);
+        return rulesSet == RulesSet.DELUXE;
     }
 }

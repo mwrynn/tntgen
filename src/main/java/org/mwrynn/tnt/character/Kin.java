@@ -1,5 +1,6 @@
 package org.mwrynn.tnt.character;
 
+@Deprecated
 public enum Kin {
 
     DWARF {
