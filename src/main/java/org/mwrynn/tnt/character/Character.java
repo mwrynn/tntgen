@@ -4,7 +4,7 @@ import org.mwrynn.tnt.character.attribute.Attribute;
 import org.mwrynn.tnt.character.attribute.AttributeName;
 import org.mwrynn.tnt.rules.RulesSet;
 
-public abstract class Character {
+public class Character {
     protected Attribute str;
     protected Attribute dex;
     protected Attribute con;
@@ -16,6 +16,8 @@ public abstract class Character {
     protected Attribute wiz;
 
     public RulesSet rulesSet = RulesSet.DELUXE; //default rulesSet is DELUXE
+
+    private KinDef kinDef;
 
     public Character(RulesSet rulesSet) {
         this.rulesSet = rulesSet;
@@ -37,10 +39,6 @@ public abstract class Character {
             - ( 9-Math.min(str.getValue(), 9) + 9-Math.min(dex.getValue(), 9) + 9-Math.min(lk.getValue(), 9)); //negative adds
         }
     }
-
-    public abstract boolean isValidInRulesSet();
-
-    public abstract String kinName();
 
     public Attribute getStr() {
         return str;
@@ -137,4 +135,21 @@ public abstract class Character {
     public void setWiz(Attribute wiz) {
         this.wiz = wiz;
     }
+
+    public KinDef getKinDef() {
+        return kinDef;
+    }
+
+    public void setKinDef(KinDef kinDef) {
+        this.kinDef = kinDef;
+        this.str.setMultiplier(kinDef.getStrMult());
+        this.dex.setMultiplier(kinDef.getDexMult());
+        this.con.setMultiplier(kinDef.getConMult());
+        this.spd.setMultiplier(kinDef.getSpdMult());
+        this.iq.setMultiplier(kinDef.getIqMult());
+        this.lk.setMultiplier(kinDef.getLkMult());
+        this.chr.setMultiplier(kinDef.getChrMult());
+        this.spd.setMultiplier(kinDef.getSpdMult());
+    }
+
 }

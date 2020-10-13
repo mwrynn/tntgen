@@ -2,6 +2,7 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.rules.RulesSet;
 
+@Deprecated
 public class Dwarf extends Character {
     public Dwarf(RulesSet rulesSet) {
         super(rulesSet);

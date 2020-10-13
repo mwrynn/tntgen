@@ -2,6 +2,7 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.rules.RulesSet;
 
+@Deprecated
 public class Fairy extends Character {
     public Fairy(RulesSet rulesSet) {
         super(rulesSet);

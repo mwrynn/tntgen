@@ -2,6 +2,7 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.rules.RulesSet;
 
+@Deprecated
 public class Elf extends Character {
 
     public Elf(RulesSet rulesSet) {

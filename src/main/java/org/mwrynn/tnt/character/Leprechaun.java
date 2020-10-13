@@ -2,6 +2,7 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.rules.RulesSet;
 
+@Deprecated
 public class Leprechaun extends Character {
     public Leprechaun(RulesSet rulesSet) {
         super(rulesSet);

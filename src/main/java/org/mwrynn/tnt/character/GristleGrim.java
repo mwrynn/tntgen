@@ -2,6 +2,7 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.rules.RulesSet;
 
+@Deprecated
 public class GristleGrim extends Dwarf {
     public GristleGrim(RulesSet rulesSet) {
         super(rulesSet);

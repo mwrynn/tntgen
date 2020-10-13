@@ -2,6 +2,7 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.rules.RulesSet;
 
+@Deprecated
 public class Midgardian extends Dwarf {
     public Midgardian(RulesSet rulesSet) {
         super(rulesSet);
