@@ -4,6 +4,7 @@ import org.mwrynn.tnt.stat.StatNames;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class TntOptions {
     private int numRolls = 0;
@@ -13,17 +14,17 @@ public class TntOptions {
     private List<String> statNameList;
     private StatNames validStatNames;
     private boolean header = false;
-
-    public TntOptions(int numRolls, int numThreads, boolean outputTiming, List<String> statNameList) {
-        validStatNames = new StatNames();
-        this.numRolls = numRolls;
-        this.numThreads = numThreads;
-        this.outputTiming = outputTiming;
-        this.statNameList = statNameList;
-    }
+    private Set<String> validKinSet;
+    private List<String> kinList;
 
     public TntOptions() {
         validStatNames = new StatNames();
+    }
+
+    public TntOptions(Set<String> validKinSet) {
+        this();
+        this.validKinSet = validKinSet;
+        this.kinList = new ArrayList(validKinSet); //default to using them all
     }
 
     public void setNumRolls(int numRolls) {
@@ -64,9 +65,31 @@ public class TntOptions {
         }
     }
 
+    public void addKin(String kin) {
+        if (kinList == null) {
+            kinList = new ArrayList<>();
+        }
+        if(!validKinSet.stream().anyMatch(kin::equalsIgnoreCase)) {
+            throw new RuntimeException("invalid kin argument: " + kin);
+        }
+
+        kinList.add(kin.toUpperCase());
+    }
+
+    public void setKinList(List<String> kinList) {
+        this.kinList = null;
+        for (String kin : kinList) {
+            addKin(kin);
+        }
+    }
+
+    public List<String> getKinList() {
+        return kinList;
+    }
+
     public void addStatName(String statName) {
         if (statNameList == null) {
-            statNameList = new ArrayList<String>();
+            statNameList = new ArrayList<>();
         }
         if(!validStatNames.contains(statName)) {
             throw new RuntimeException("invalid stat argument: " + statName);
@@ -77,6 +100,7 @@ public class TntOptions {
     public List<String> getStatNameList() {
         return statNameList;
     }
+
 
     public boolean getHeader() {
         return header;

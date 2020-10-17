@@ -11,6 +11,7 @@ import org.mwrynn.tnt.stat.StatNames;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class OptionsReader {
     private static final int NUM_THREADS_DEFAULT = 4;
@@ -18,20 +19,33 @@ public class OptionsReader {
     private CommandLineParser parser = new DefaultParser();
     private Options options = new Options();
     private HelpFormatter formatter = new HelpFormatter();
+    private Set<String> validKinSet;
+
+    public OptionsReader(Set<String> validKinSet) {
+        this.validKinSet = validKinSet;
+    }
 
     public TntOptions parse(String[] args) {
         options.addRequiredOption("r", "rolls", true,"number of rolls per combination of rules and kindred");
         options.addOption("t", "time",false, "display execution time");
         options.addOption("p",  "parallel", true, "number of parallel threads");
         options.addOption("d",  "delimiter", true, "output field delimiter; default is ,");
+
         Option statsOption = new Option("s", "stats", true, "the stats to collect and output");
         statsOption.setArgs(Option.UNLIMITED_VALUES);
         statsOption.setValueSeparator(',');
         statsOption.setType(List.class);
         options.addOption(statsOption);
+
+        Option kinOption = new Option("k", "kin", true, "the kindred to collect stats for");
+        kinOption.setArgs(Option.UNLIMITED_VALUES);
+        kinOption.setValueSeparator(',');
+        kinOption.setType(List.class);
+        options.addOption(kinOption);
+
         options.addOption("h",  "header", false, "output column headers");
 
-        TntOptions tntOptions = new TntOptions();
+        TntOptions tntOptions = new TntOptions(validKinSet);
 
         try {
             // parse the command line arguments
@@ -54,8 +68,8 @@ public class OptionsReader {
             }
 
             if (line.hasOption("stats")) {
-                List<String> statStrList = Arrays.asList(line.getOptionValues("stats"));
-                tntOptions.setStatNameList(statStrList);
+                List<String> stats = Arrays.asList(line.getOptionValues("stats"));
+                tntOptions.setStatNameList(stats);
             } else {
                 tntOptions.addStatName(StatNames.ADDS);
             }
@@ -64,7 +78,10 @@ public class OptionsReader {
                 tntOptions.setHeader(true);
             }
 
-
+            if (line.hasOption("kin")) {
+                List<String> kin = Arrays.asList(line.getOptionValues("kin"));
+                tntOptions.setKinList(kin);
+            }
         }
         catch( ParseException exp ) {
             exp.printStackTrace();

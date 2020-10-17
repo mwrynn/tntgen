@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,8 +32,6 @@ import static org.mwrynn.tnt.character.attribute.AttributeName.*;
 public class TntGen {
     private TntOptions tntOptions;
     private KinConf kinConf;
-
-    private static final String KIN_CLASS_PREFIX = "org.mwrynn.tnt.character.";
 
     ConcurrentHashMap<MapKey, Long> statsMap = new ConcurrentHashMap<>();
 
@@ -131,10 +130,16 @@ public class TntGen {
         }
     }
 
-    private List<RulesPlusKin> makeAllRulesKinCombos() {
+    private List<RulesPlusKin> makeRulesKinCombos() {
         ArrayList<RulesPlusKin> rulesKinList = new ArrayList<>();
+        
+        List<KinDef> applicableKinDefs = kinConf.getKinDefs()
+                .stream()
+                .filter(k -> tntOptions.getKinList().contains(k.getKinName().toUpperCase()))
+                .collect(Collectors.toList()); ;
+
         for (OptionalRules optionalRules : OptionalRules.values()) {
-            for (KinDef kinDef : kinConf.getKinDefs()) {
+            for (KinDef kinDef : applicableKinDefs) {
                 rulesKinList.add(new RulesPlusKin(kinDef.getRulesSet(), optionalRules, kinDef));
             }
         }
@@ -144,8 +149,8 @@ public class TntGen {
     public void generate() {
         ExecutorService executorService = Executors.newFixedThreadPool(tntOptions.getNumThreads());
 
-        //set up all combinations of rulesSet + kin
-        List<RulesPlusKin> rulesKinList = makeAllRulesKinCombos();
+        //set up combinations of rulesSet + kin
+        List<RulesPlusKin> rulesKinList = makeRulesKinCombos();
 
         for (RulesPlusKin rulesKin : rulesKinList) {
             executorService.execute(() -> {
@@ -262,18 +267,21 @@ public class TntGen {
         long startTime = System.nanoTime();
 
         TntGen tntGen = new TntGen();
-        OptionsReader optionsReader = new OptionsReader();
-        tntGen.tntOptions = optionsReader.parse(args);
-        if(tntGen.tntOptions == null) {
-            optionsReader.printHelp();
-            System.exit(1);
-        }
 
         try {
             KinConfReader kinConfReader = new KinConfReader();
             tntGen.kinConf = kinConfReader.getKinConf();
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
+        }
+
+        Set<String> validKinSet = tntGen.kinConf.getKinDefs().stream().map(KinDef::getKinName).collect(Collectors.toSet());
+
+        OptionsReader optionsReader = new OptionsReader(validKinSet);
+        tntGen.tntOptions = optionsReader.parse(args);
+        if(tntGen.tntOptions == null) {
+            optionsReader.printHelp();
             System.exit(1);
         }
 

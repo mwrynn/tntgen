@@ -43,7 +43,7 @@ public class KinDef implements Comparable<KinDef> {
     }
 
     public void setKinName(String kinName) {
-        this.kinName = kinName;
+        this.kinName = kinName.toUpperCase();
     }
 
     public RulesSet getRulesSet() {
