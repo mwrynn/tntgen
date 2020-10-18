@@ -1,31 +1,31 @@
 kinDefs:
   - kinName: Dwarf
-    rulesSet: FIFTH
+    rulesEdition: FIFTH
     strMult: 2.0f
     conMult: 2.0f
     chrMult: 0.667f
   - kinName: Elf
-    rulesSet: FIFTH
+    rulesEdition: FIFTH
     iqMult: 1.5f
     dexMult: 1.5f
     conMult: 0.667f
     chrMult: 2.0f
   - kinName: Elf
-    rulesSet: DELUXE
+    rulesEdition: DELUXE
     conMult: 0.667f
     dexMult: 1.333f
     iqMult: 1.5f
     wizMult: 1.5f
     chrMult: 1.5f
   - kinName: Fairy
-    rulesSet: FIFTH
+    rulesEdition: FIFTH
     strMult: 0.25f
     dexMult: 1.5f
     lkMult: 1.5f
     conMult: 0.25f
     chrMult: 2.0f
   - kinName: Fairy
-    rulesSet: DELUXE
+    rulesEdition: DELUXE
     strMult: 0.25f
     conMult: 0.25f
     dexMult: 1.75f
@@ -33,33 +33,33 @@ kinDefs:
     chrMult: 1.5f
     wizMult: 2.0f
   - kinName: GristleGrim
-    rulesSet: DELUXE
+    rulesEdition: DELUXE
     strMult: 2.0f
     conMult: 2.0f
     lkMult: 0.75f
   - kinName: Hobb
-    rulesSet: FIFTH
+    rulesEdition: FIFTH
     strMult: 0.5f
     conMult: 2.0f
     dexMult: 1.5f
   - kinName: Hobb
-    rulesSet: DELUXE
+    rulesEdition: DELUXE
     strMult: 0.5f
     conMult: 2.0f
     dexMult: 1.5f
     lkMult: 1.5f
   - kinName: Human
-    rulesSet: FIFTH
+    rulesEdition: FIFTH
   - kinName: Human
-    rulesSet: DELUXE
+    rulesEdition: DELUXE
   - kinName: Leprechaun
-    rulesSet: FIFTH
+    rulesEdition: FIFTH
     strMult: 0.5f
     dexMult: 1.5f
     iqMult: 1.5f
     lkMult: 1.5f
   - kinName: Leprechaun
-    rulesSet: DELUXE
+    rulesEdition: DELUXE
     strMult: 0.333f
     conMult: 0.667f
     dexMult: 1.5f
@@ -67,7 +67,7 @@ kinDefs:
     iqMult: 1.25f
     wizMult: 1.5f
   - kinName: Midgardian
-    rulesSet: DELUXE
+    rulesEdition: DELUXE
     strMult: 2.0f
     conMult: 2.0f
     chrMult: 0.75f

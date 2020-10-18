@@ -1,14 +1,14 @@
 package org.mwrynn.tnt.rules;
 
-public enum OptionalRules {
-    LOW_REROLL {
+public enum RulesEdition {
+    DELUXE {
         public String toString() {
-            return "LOW_REROLL";
+            return "DELUXE";
         }
     },
-    NONE {
+    FIFTH {
         public String toString() {
-            return "NONE";
+            return "FIFTH";
         }
     }
 }

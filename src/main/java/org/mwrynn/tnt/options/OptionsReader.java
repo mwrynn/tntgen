@@ -7,10 +7,14 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.mwrynn.tnt.rules.OptionalRules;
+import org.mwrynn.tnt.rules.RulesEdition;
 import org.mwrynn.tnt.stat.StatNames;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class OptionsReader {
     private static final int NUM_THREADS_DEFAULT = 4;
@@ -18,20 +22,49 @@ public class OptionsReader {
     private CommandLineParser parser = new DefaultParser();
     private Options options = new Options();
     private HelpFormatter formatter = new HelpFormatter();
+    private Set<String> validKinSet;
+    private Set<OptionalRules> validOptionalRulesSet;
+    private Set<RulesEdition> validRulesEditionSet;
+
+    public OptionsReader(Set<String> validKinSet, Set<OptionalRules> validOptionalRulesSet, Set<RulesEdition> validRulesEditionSet) {
+        this.validKinSet = validKinSet;
+        this.validOptionalRulesSet = validOptionalRulesSet;
+        this.validRulesEditionSet = validRulesEditionSet;
+    }
 
     public TntOptions parse(String[] args) {
         options.addRequiredOption("r", "rolls", true,"number of rolls per combination of rules and kindred");
         options.addOption("t", "time",false, "display execution time");
         options.addOption("p",  "parallel", true, "number of parallel threads");
         options.addOption("d",  "delimiter", true, "output field delimiter; default is ,");
-        Option statsOption = new Option("s", "stats", true, "the stats to collect and output");
+
+        Option statsOption = new Option("s", "stats", true, "comma-separated list of the stats to collect and output");
         statsOption.setArgs(Option.UNLIMITED_VALUES);
         statsOption.setValueSeparator(',');
         statsOption.setType(List.class);
         options.addOption(statsOption);
+
+        Option kinOption = new Option("k", "kin", true, "comma-separated list of the kindred to collect stats for");
+        kinOption.setArgs(Option.UNLIMITED_VALUES);
+        kinOption.setValueSeparator(',');
+        kinOption.setType(List.class);
+        options.addOption(kinOption);
+
         options.addOption("h",  "header", false, "output column headers");
 
-        TntOptions tntOptions = new TntOptions();
+        Option optionalOption = new Option("o", "optional", true, "comma-separated list of the optional rules to apply");
+        optionalOption.setArgs(Option.UNLIMITED_VALUES);
+        optionalOption.setValueSeparator(',');
+        optionalOption.setType(List.class);
+        options.addOption(optionalOption);
+
+        Option rulesEditionOption = new Option("e", "edition", true, "comma-separated list of the rules editions to use");
+        rulesEditionOption.setArgs(Option.UNLIMITED_VALUES);
+        rulesEditionOption.setValueSeparator(',');
+        rulesEditionOption.setType(List.class);
+        options.addOption(rulesEditionOption);
+
+        TntOptions tntOptions = new TntOptions(validKinSet, validOptionalRulesSet, validRulesEditionSet);
 
         try {
             // parse the command line arguments
@@ -54,8 +87,8 @@ public class OptionsReader {
             }
 
             if (line.hasOption("stats")) {
-                List<String> statStrList = Arrays.asList(line.getOptionValues("stats"));
-                tntOptions.setStatNameList(statStrList);
+                List<String> stats = Arrays.asList(line.getOptionValues("stats"));
+                tntOptions.setStatNameList(stats);
             } else {
                 tntOptions.addStatName(StatNames.ADDS);
             }
@@ -64,6 +97,28 @@ public class OptionsReader {
                 tntOptions.setHeader(true);
             }
 
+            if (line.hasOption("kin")) {
+                List<String> kin = Arrays.asList(line.getOptionValues("kin"));
+                tntOptions.setKinList(kin);
+            }
+
+            if (line.hasOption("optional")) {
+                List<String> optionalRulesStrList = Arrays.asList(line.getOptionValues("optional"));
+                List<OptionalRules> optionalRulesList = new ArrayList<>();
+                for(String optionalRulesStr : optionalRulesStrList) {
+                    optionalRulesList.add(OptionalRules.valueOf(optionalRulesStr));
+                }
+                tntOptions.setOptionalList(optionalRulesList);
+            }
+
+            if (line.hasOption("edition")) {
+                List<String> rulesEditionStrList = Arrays.asList(line.getOptionValues("edition"));
+                List<RulesEdition> rulesEditionList = new ArrayList<>();
+                for(String rulesEditionStr : rulesEditionStrList) {
+                    rulesEditionList.add(RulesEdition.valueOf(rulesEditionStr));
+                }
+                tntOptions.setRulesEditionList(rulesEditionList);
+            }
 
         }
         catch( ParseException exp ) {

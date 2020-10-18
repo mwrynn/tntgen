@@ -1,14 +1,13 @@
 package org.mwrynn.tnt.character;
 
-import org.mwrynn.tnt.rules.RulesSet;
-import org.mwrynn.tnt.stat.Stat;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 import java.util.Objects;
 
 public class KinDef implements Comparable<KinDef> {
     private String kinName;
 
-    private RulesSet rulesSet;
+    private RulesEdition rulesEdition;
 
     private float strMult = 1.0f;
     private float dexMult = 1.0f;
@@ -24,9 +23,9 @@ public class KinDef implements Comparable<KinDef> {
     }
 
     //could use Builder pattern
-    public KinDef(RulesSet rulesSet, String kinName, float strMult, float dexMult,
+    public KinDef(RulesEdition rulesEdition, String kinName, float strMult, float dexMult,
                   float conMult, float spdMult, float iqMult, float lkMult, float chrMult, float wizMult) {
-        this.rulesSet = rulesSet;
+        this.rulesEdition = rulesEdition;
         this.kinName = kinName;
         this.strMult = strMult;
         this.dexMult = dexMult;
@@ -43,15 +42,15 @@ public class KinDef implements Comparable<KinDef> {
     }
 
     public void setKinName(String kinName) {
-        this.kinName = kinName;
+        this.kinName = kinName.toUpperCase();
     }
 
-    public RulesSet getRulesSet() {
-        return rulesSet;
+    public RulesEdition getRulesEdition() {
+        return rulesEdition;
     }
 
-    public void setKinName(RulesSet rulesSet) {
-        this.rulesSet = rulesSet;
+    public void setKinName(RulesEdition rulesEdition) {
+        this.rulesEdition = rulesEdition;
     }
 
     public float getStrMult() {
@@ -86,8 +85,8 @@ public class KinDef implements Comparable<KinDef> {
         return wizMult;
     }
 
-    public void setRulesSet(RulesSet rulesSet) {
-        this.rulesSet = rulesSet;
+    public void setRulesEdition(RulesEdition rulesEdition) {
+        this.rulesEdition = rulesEdition;
     }
 
     public void setStrMult(float strMult) {
@@ -130,12 +129,12 @@ public class KinDef implements Comparable<KinDef> {
         KinDef other = (KinDef)obj;
 
         return  (this.getKinName().equals(other.getKinName())) &&
-                (this.getRulesSet() == other.getRulesSet());
+                (this.getRulesEdition() == other.getRulesEdition());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(kinName, rulesSet);
+        return Objects.hash(kinName, rulesEdition);
     }
 
     @Override
@@ -143,7 +142,7 @@ public class KinDef implements Comparable<KinDef> {
         if (this.equals(other)) {
             return 0;
         }
-        if (this.getRulesSet().equals(other.getRulesSet())) {
+        if (this.getRulesEdition().equals(other.getRulesEdition())) {
             return this.getKinName().compareTo(other.getKinName());
         }
         return this.getKinName().compareTo(other.getKinName());

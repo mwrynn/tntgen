@@ -1,14 +1,14 @@
 package org.mwrynn.tnt.character;
 
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 @Deprecated
 public class Elf extends Character {
 
-    public Elf(RulesSet rulesSet) {
-        super(rulesSet);
+    public Elf(RulesEdition rulesEdition) {
+        super(rulesEdition);
 
-        if (this.rulesSet == RulesSet.FIFTH) {
+        if (this.rulesEdition == RulesEdition.FIFTH) {
             this.iq.setMultiplier(1.5f);
             this.dex.setMultiplier(1.5f);
             this.con.setMultiplier(0.667f);
@@ -26,7 +26,7 @@ public class Elf extends Character {
         return "Elf";
     }
 
-    public boolean isValidInRulesSet() {
+    public boolean isValidInRulesEdition() {
         return true;
     }
 }

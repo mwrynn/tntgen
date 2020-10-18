@@ -1,9 +1,13 @@
 package org.mwrynn.tnt.options;
 
+import org.mwrynn.tnt.rules.OptionalRules;
+import org.mwrynn.tnt.rules.RulesEdition;
 import org.mwrynn.tnt.stat.StatNames;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class TntOptions {
     private int numRolls = 0;
@@ -11,19 +15,36 @@ public class TntOptions {
     private boolean outputTiming = false;
     private String delimiter = ",";
     private List<String> statNameList;
-    private StatNames validStatNames;
+    private final StatNames validStatNames;
     private boolean header = false;
 
-    public TntOptions(int numRolls, int numThreads, boolean outputTiming, List<String> statNameList) {
-        validStatNames = new StatNames();
-        this.numRolls = numRolls;
-        this.numThreads = numThreads;
-        this.outputTiming = outputTiming;
-        this.statNameList = statNameList;
-    }
+    private Set<String> validKinSet;
+    private List<String> kinList;
+
+    private List<OptionalRules> optionalList;
+    private Set<OptionalRules> validOptionalSet;
+
+    private List<RulesEdition> rulesEditionList;
+    private Set<RulesEdition> validRulesEditionSet;
 
     public TntOptions() {
         validStatNames = new StatNames();
+    }
+
+    public TntOptions(Set<String> validKinSet, Set<OptionalRules> validOptionalSet, Set<RulesEdition> validRulesEditionSet) {
+        this();
+        this.validKinSet = validKinSet;
+        this.validOptionalSet = validOptionalSet;
+        this.validRulesEditionSet = validRulesEditionSet;
+
+        this.kinList = new ArrayList<>(validKinSet); //default to using them all
+
+        this.optionalList = new ArrayList<>(); //default to using them all
+        this.optionalList.addAll(Arrays.asList(OptionalRules.values()));
+
+        this.rulesEditionList = new ArrayList<>(); //default to using them all
+        this.rulesEditionList.addAll(Arrays.asList(RulesEdition.values()));
+
     }
 
     public void setNumRolls(int numRolls) {
@@ -64,9 +85,31 @@ public class TntOptions {
         }
     }
 
+    public void addKin(String kin) {
+        if (kinList == null) {
+            kinList = new ArrayList<>();
+        }
+        if(!validKinSet.stream().anyMatch(kin::equalsIgnoreCase)) {
+            throw new RuntimeException("invalid kin argument: " + kin);
+        }
+
+        kinList.add(kin.toUpperCase());
+    }
+
+    public void setKinList(List<String> kinList) {
+        this.kinList = null;
+        for (String kin : kinList) {
+            addKin(kin);
+        }
+    }
+
+    public List<String> getKinList() {
+        return kinList;
+    }
+
     public void addStatName(String statName) {
         if (statNameList == null) {
-            statNameList = new ArrayList<String>();
+            statNameList = new ArrayList<>();
         }
         if(!validStatNames.contains(statName)) {
             throw new RuntimeException("invalid stat argument: " + statName);
@@ -78,6 +121,7 @@ public class TntOptions {
         return statNameList;
     }
 
+
     public boolean getHeader() {
         return header;
     }
@@ -85,4 +129,67 @@ public class TntOptions {
     public void setHeader(boolean header) {
         this.header = header;
     }
+
+    public void addOptional(OptionalRules optionalRules) {
+        if (optionalList == null) {
+            optionalList = new ArrayList<>();
+        }
+
+        boolean found = false;
+        for (OptionalRules validOptional : validOptionalSet) {
+            if(optionalRules.equals(validOptional)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            throw new RuntimeException("invalid optional rules argument: " + optionalRules);
+        }
+
+        optionalList.add(optionalRules);
+    }
+
+    public void setOptionalList(List<OptionalRules> optionalList) {
+        this.optionalList = null;
+        for (OptionalRules optionalRules : optionalList) {
+            addOptional(optionalRules);
+        }
+    }
+
+    public List<OptionalRules> getOptionalList() {
+        return optionalList;
+    }
+
+    public void addRulesEdition(RulesEdition rulesEdition) {
+        if (rulesEditionList == null) {
+            rulesEditionList = new ArrayList<>();
+        }
+
+        boolean found = false;
+        for (RulesEdition validRulesEdition : validRulesEditionSet) {
+            if(rulesEdition.equals(validRulesEdition)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            throw new RuntimeException("invalid rules edition argument: " + rulesEdition);
+        }
+
+        rulesEditionList.add(rulesEdition);
+    }
+
+    public void setRulesEditionList(List<RulesEdition> rulesEditionList) {
+        this.rulesEditionList = null;
+        for (RulesEdition rulesEdition : rulesEditionList) {
+            addRulesEdition(rulesEdition);
+        }
+    }
+
+    public List<RulesEdition> getRulesEditionList() {
+        return rulesEditionList;
+    }
+
 }

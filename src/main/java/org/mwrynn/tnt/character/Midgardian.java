@@ -1,12 +1,12 @@
 package org.mwrynn.tnt.character;
 
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 @Deprecated
 public class Midgardian extends Dwarf {
-    public Midgardian(RulesSet rulesSet) {
-        super(rulesSet);
-        assert (isValidInRulesSet()) : "Midgardian Dwarves only available in the Deluxe rules.";
+    public Midgardian(RulesEdition rulesEdition) {
+        super(rulesEdition);
+        assert (isValidInRulesEdition()) : "Midgardian Dwarves only available in the Deluxe rules.";
 
         this.str.setMultiplier(2.0f);
         this.con.setMultiplier(2.0f);
@@ -17,7 +17,7 @@ public class Midgardian extends Dwarf {
         return "Midgardian Dwarf";
     }
 
-    public boolean isValidInRulesSet() {
-        return (rulesSet == RulesSet.DELUXE);
+    public boolean isValidInRulesEdition() {
+        return (rulesEdition == RulesEdition.DELUXE);
     }
 }

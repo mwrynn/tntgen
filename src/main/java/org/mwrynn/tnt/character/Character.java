@@ -2,7 +2,7 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.character.attribute.Attribute;
 import org.mwrynn.tnt.character.attribute.AttributeName;
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 public class Character {
     protected Attribute str;
@@ -15,24 +15,24 @@ public class Character {
     protected Attribute chr;
     protected Attribute wiz;
 
-    public RulesSet rulesSet = RulesSet.DELUXE; //default rulesSet is DELUXE
+    public RulesEdition rulesEdition = RulesEdition.DELUXE; //default rulesEdition is DELUXE
 
     private KinDef kinDef;
 
-    public Character(RulesSet rulesSet) {
-        this.rulesSet = rulesSet;
-        this.str = new Attribute(rulesSet, AttributeName.STR, 0, 1.0f);
-        this.dex = new Attribute(rulesSet, AttributeName.DEX, 0, 1.0f);
-        this.con = new Attribute(rulesSet, AttributeName.CON, 0, 1.0f);
-        this.spd = new Attribute(rulesSet, AttributeName.SPD, 0, 1.0f);
-        this.iq = new Attribute(rulesSet, AttributeName.IQ, 0, 1.0f);
-        this.lk = new Attribute(rulesSet, AttributeName.LK, 0, 1.0f);
-        this.chr = new Attribute(rulesSet, AttributeName.CHR, 0, 1.0f);
-        this.wiz = new Attribute(rulesSet, AttributeName.WIZ, 0, 1.0f);
+    public Character(RulesEdition rulesEdition) {
+        this.rulesEdition = rulesEdition;
+        this.str = new Attribute(rulesEdition, AttributeName.STR, 0, 1.0f);
+        this.dex = new Attribute(rulesEdition, AttributeName.DEX, 0, 1.0f);
+        this.con = new Attribute(rulesEdition, AttributeName.CON, 0, 1.0f);
+        this.spd = new Attribute(rulesEdition, AttributeName.SPD, 0, 1.0f);
+        this.iq = new Attribute(rulesEdition, AttributeName.IQ, 0, 1.0f);
+        this.lk = new Attribute(rulesEdition, AttributeName.LK, 0, 1.0f);
+        this.chr = new Attribute(rulesEdition, AttributeName.CHR, 0, 1.0f);
+        this.wiz = new Attribute(rulesEdition, AttributeName.WIZ, 0, 1.0f);
     }
 
     public int getAdds() {
-        if (rulesSet == RulesSet.DELUXE) {
+        if (rulesEdition == RulesEdition.DELUXE) {
             return Math.max(str.getValue(), 12)-12 + Math.max(dex.getValue(), 12)-12 + Math.max(lk.getValue(), 12)-12 + Math.max(spd.getValue(), 12)-12;
         } else { //FIFTH
             return ( Math.max(str.getValue(), 12)-12 + Math.max(dex.getValue(), 12)-12 + Math.max(lk.getValue(), 12)-12 ) //positive adds

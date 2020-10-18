@@ -1,13 +1,13 @@
 package org.mwrynn.tnt.character;
 
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 @Deprecated
 public class Hobb extends Character {
-    public Hobb(RulesSet rulesSet) {
-        super(rulesSet);
+    public Hobb(RulesEdition rulesEdition) {
+        super(rulesEdition);
 
-        if (this.rulesSet == RulesSet.FIFTH) {
+        if (this.rulesEdition == RulesEdition.FIFTH) {
             this.str.setMultiplier(0.5f);
             this.con.setMultiplier(2.0f);
             this.dex.setMultiplier(1.5f);
@@ -23,7 +23,7 @@ public class Hobb extends Character {
         return "Hobb";
     }
 
-    public boolean isValidInRulesSet() {
+    public boolean isValidInRulesEdition() {
         return true;
     }
 }

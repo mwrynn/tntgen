@@ -1,13 +1,13 @@
 package org.mwrynn.tnt.character;
 
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 @Deprecated
 public class GristleGrim extends Dwarf {
-    public GristleGrim(RulesSet rulesSet) {
-        super(rulesSet);
+    public GristleGrim(RulesEdition rulesEdition) {
+        super(rulesEdition);
 
-        assert (isValidInRulesSet()) : "GristleGrim Dwarves only available in the Deluxe rules.";
+        assert (isValidInRulesEdition()) : "GristleGrim Dwarves only available in the Deluxe rules.";
 
         this.str.setMultiplier(2.0f);
         this.con.setMultiplier(2.0f);
@@ -18,7 +18,7 @@ public class GristleGrim extends Dwarf {
         return "GristleGrim Dwarf";
     }
 
-    public boolean isValidInRulesSet() {
-        return rulesSet == RulesSet.DELUXE;
+    public boolean isValidInRulesEdition() {
+        return rulesEdition == RulesEdition.DELUXE;
     }
 }
