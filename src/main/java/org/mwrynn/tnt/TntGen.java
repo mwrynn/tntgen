@@ -9,7 +9,7 @@ import org.mwrynn.tnt.options.OptionsReader;
 import org.mwrynn.tnt.options.TntOptions;
 import org.mwrynn.tnt.roller.Roller;
 import org.mwrynn.tnt.rules.OptionalRules;
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 import org.mwrynn.tnt.stat.Stat;
 import org.mwrynn.tnt.stat.StatNames;
 
@@ -38,19 +38,19 @@ public class TntGen {
     ConcurrentHashMap<MapKey, Long> statsMap = new ConcurrentHashMap<>();
 
     class RulesPlusKin implements Comparable<RulesPlusKin> {
-        RulesSet rulesSet;
+        RulesEdition rulesEdition;
         OptionalRules optionalRules;
         KinDef kinDef;
 
-        RulesPlusKin(RulesSet rulesSet, OptionalRules optionalRules, KinDef kinDef) {
-            this.rulesSet = rulesSet;
+        RulesPlusKin(RulesEdition rulesEdition, OptionalRules optionalRules, KinDef kinDef) {
+            this.rulesEdition = rulesEdition;
             this.optionalRules = optionalRules;
             this.kinDef = kinDef;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(rulesSet, optionalRules, kinDef);
+            return Objects.hash(rulesEdition, optionalRules, kinDef);
         }
 
         @Override
@@ -60,7 +60,7 @@ public class TntGen {
 
             RulesPlusKin other = (RulesPlusKin)obj;
 
-            return  (this.rulesSet.equals(other.rulesSet)) &&
+            return  (this.rulesEdition.equals(other.rulesEdition)) &&
                     (this.optionalRules.equals(other.optionalRules)) &&
                     (this.kinDef.equals(other.kinDef));
         }
@@ -70,10 +70,10 @@ public class TntGen {
             if (this.equals(other)) {
                 return 0;
             }
-            if (this.rulesSet.compareTo(other.rulesSet) < 0) {
+            if (this.rulesEdition.compareTo(other.rulesEdition) < 0) {
                 return -1;
             }
-            if (this.rulesSet.compareTo(other.rulesSet) > 0) {
+            if (this.rulesEdition.compareTo(other.rulesEdition) > 0) {
                 return 1;
             }
             if (this.optionalRules.compareTo(other.optionalRules) < 0) {
@@ -114,8 +114,8 @@ public class TntGen {
 
         @Override
         public String toString() {
-            //format is basically RULESSET,KIN,STATNAME,STATVAL but delimiter can be different
-            return rulesPlusKin.rulesSet + tntOptions.getDelimiter() + rulesPlusKin.optionalRules + tntOptions.getDelimiter() +
+            //format is basically EDITION,KIN,STATNAME,STATVAL but delimiter can be different
+            return rulesPlusKin.rulesEdition + tntOptions.getDelimiter() + rulesPlusKin.optionalRules + tntOptions.getDelimiter() +
                     rulesPlusKin.kinDef.getKinName() + tntOptions.getDelimiter() + stat.getStatName() + tntOptions.getDelimiter() + stat.getValue();
         }
 
@@ -138,11 +138,12 @@ public class TntGen {
         List<KinDef> applicableKinDefs = kinConf.getKinDefs()
                 .stream()
                 .filter(k -> tntOptions.getKinList().contains(k.getKinName().toUpperCase()))
+                .filter(k -> tntOptions.getRulesEditionList().contains(k.getRulesEdition()))
                 .collect(Collectors.toList()); ;
 
         for (OptionalRules optionalRules : tntOptions.getOptionalList()) {
             for (KinDef kinDef : applicableKinDefs) {
-                rulesKinList.add(new RulesPlusKin(kinDef.getRulesSet(), optionalRules, kinDef));
+                rulesKinList.add(new RulesPlusKin(kinDef.getRulesEdition(), optionalRules, kinDef));
             }
         }
         return rulesKinList;
@@ -151,12 +152,12 @@ public class TntGen {
     public void generate() {
         ExecutorService executorService = Executors.newFixedThreadPool(tntOptions.getNumThreads());
 
-        //set up combinations of rulesSet + kin
+        //set up combinations of rulesEdition + kin
         List<RulesPlusKin> rulesKinList = makeRulesKinCombos();
 
         for (RulesPlusKin rulesKin : rulesKinList) {
             executorService.execute(() -> {
-                Character c = new Character(rulesKin.rulesSet);
+                Character c = new Character(rulesKin.rulesEdition);
                 c.setKinDef(rulesKin.kinDef);
                 generateLoop(c, rulesKin);
             });
@@ -184,7 +185,7 @@ public class TntGen {
         );
 
         if(tntOptions.getHeader()) {
-            System.out.println("RULESSET" + tntOptions.getDelimiter() + "OPTIONALRULES" + tntOptions.getDelimiter() + "KIN" + tntOptions.getDelimiter() + "STAT" + tntOptions.getDelimiter() + "COUNT");
+            System.out.println("EDITION" + tntOptions.getDelimiter() + "OPTIONALRULES" + tntOptions.getDelimiter() + "KIN" + tntOptions.getDelimiter() + "STAT" + tntOptions.getDelimiter() + "COUNT");
         }
 
         for (Map.Entry<MapKey, Long> entry : mapSorted.entrySet()) {
@@ -194,7 +195,7 @@ public class TntGen {
 
     private void generateLoop(Character c, RulesPlusKin rulesPlusKin) {
         Dice dice = new Dice(3, 6);
-        Roller roller = new Roller(rulesPlusKin.rulesSet, rulesPlusKin.optionalRules, dice);
+        Roller roller = new Roller(rulesPlusKin.rulesEdition, rulesPlusKin.optionalRules, dice);
 
         for (int i = 0; i < tntOptions.getNumRolls(); i++) {
             c.setStr(roller.rollAttribute(c.getStr()));
@@ -280,8 +281,9 @@ public class TntGen {
 
         Set<String> validKinSet = tntGen.kinConf.getKinDefs().stream().map(KinDef::getKinName).collect(Collectors.toSet());
         Set<OptionalRules> validOptionalRulesSet = new HashSet<>(Arrays.asList(OptionalRules.values()));
+        Set<RulesEdition> validRulesEditionSet = new HashSet<>(Arrays.asList(RulesEdition.values()));
 
-        OptionsReader optionsReader = new OptionsReader(validKinSet, validOptionalRulesSet);
+        OptionsReader optionsReader = new OptionsReader(validKinSet, validOptionalRulesSet, validRulesEditionSet);
         tntGen.tntOptions = optionsReader.parse(args);
         if(tntGen.tntOptions == null) {
             optionsReader.printHelp();

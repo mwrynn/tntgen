@@ -8,6 +8,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.mwrynn.tnt.rules.OptionalRules;
+import org.mwrynn.tnt.rules.RulesEdition;
 import org.mwrynn.tnt.stat.StatNames;
 
 import java.util.ArrayList;
@@ -23,10 +24,12 @@ public class OptionsReader {
     private HelpFormatter formatter = new HelpFormatter();
     private Set<String> validKinSet;
     private Set<OptionalRules> validOptionalRulesSet;
+    private Set<RulesEdition> validRulesEditionSet;
 
-    public OptionsReader(Set<String> validKinSet, Set<OptionalRules> validOptionalRulesSet) {
+    public OptionsReader(Set<String> validKinSet, Set<OptionalRules> validOptionalRulesSet, Set<RulesEdition> validRulesEditionSet) {
         this.validKinSet = validKinSet;
         this.validOptionalRulesSet = validOptionalRulesSet;
+        this.validRulesEditionSet = validRulesEditionSet;
     }
 
     public TntOptions parse(String[] args) {
@@ -55,7 +58,13 @@ public class OptionsReader {
         optionalOption.setType(List.class);
         options.addOption(optionalOption);
 
-        TntOptions tntOptions = new TntOptions(validKinSet, validOptionalRulesSet);
+        Option rulesEditionOption = new Option("e", "edition", true, "comma-separated list of the rules editions to use");
+        rulesEditionOption.setArgs(Option.UNLIMITED_VALUES);
+        rulesEditionOption.setValueSeparator(',');
+        rulesEditionOption.setType(List.class);
+        options.addOption(rulesEditionOption);
+
+        TntOptions tntOptions = new TntOptions(validKinSet, validOptionalRulesSet, validRulesEditionSet);
 
         try {
             // parse the command line arguments
@@ -95,12 +104,22 @@ public class OptionsReader {
 
             if (line.hasOption("optional")) {
                 List<String> optionalRulesStrList = Arrays.asList(line.getOptionValues("optional"));
-                List<OptionalRules> OptionalRulesList = new ArrayList<>();
+                List<OptionalRules> optionalRulesList = new ArrayList<>();
                 for(String optionalRulesStr : optionalRulesStrList) {
-                    OptionalRulesList.add(OptionalRules.valueOf(optionalRulesStr));
+                    optionalRulesList.add(OptionalRules.valueOf(optionalRulesStr));
                 }
-                tntOptions.setOptionalList(OptionalRulesList);
+                tntOptions.setOptionalList(optionalRulesList);
             }
+
+            if (line.hasOption("edition")) {
+                List<String> rulesEditionStrList = Arrays.asList(line.getOptionValues("edition"));
+                List<RulesEdition> rulesEditionList = new ArrayList<>();
+                for(String rulesEditionStr : rulesEditionStrList) {
+                    rulesEditionList.add(RulesEdition.valueOf(rulesEditionStr));
+                }
+                tntOptions.setRulesEditionList(rulesEditionList);
+            }
+
         }
         catch( ParseException exp ) {
             exp.printStackTrace();

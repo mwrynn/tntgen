@@ -1,22 +1,20 @@
 package org.mwrynn.tnt.roller;
 
 import org.mwrynn.tnt.character.attribute.Attribute;
-import org.mwrynn.tnt.character.attribute.AttributeName;
-import org.mwrynn.tnt.character.Character;
 import org.mwrynn.tnt.dice.Dice;
 import org.mwrynn.tnt.dice.DiceRollResult;
 import org.mwrynn.tnt.rules.OptionalRules;
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 public class Roller {
-    private RulesSet rulesSet;
+    private RulesEdition rulesEdition;
     private OptionalRules optionalRules;
     private Dice dice;
-    private static final int REROLL_IF_LESS_THAN_THIS = 9; //for *_REROLL rulesSets only (rerollIfTooLow == false)
+    private static final int REROLL_IF_LESS_THAN_THIS = 9; //for LOW_REROLL optional rules only
     private boolean rerollIfTooLow = false;
 
-    public Roller(RulesSet rulesSet, OptionalRules optionalRules, Dice dice) {
-        this.rulesSet = rulesSet;
+    public Roller(RulesEdition rulesEdition, OptionalRules optionalRules, Dice dice) {
+        this.rulesEdition = rulesEdition;
         this.optionalRules = optionalRules;
         this.dice = dice;
 
@@ -28,10 +26,8 @@ public class Roller {
     public Attribute rollAttribute(Attribute attribute) {
         int runningTotal = 0;
         DiceRollResult diceRollResult;
-        int finalRoll;
-        float mult = 1;
 
-        if ( (rulesSet == RulesSet.DELUXE) && (optionalRules == OptionalRules.LOW_REROLL) ) {
+        if ( (rulesEdition == RulesEdition.DELUXE) && (optionalRules == OptionalRules.LOW_REROLL) ) {
 
             //roll with TARO
             do {
@@ -44,7 +40,7 @@ public class Roller {
             } while (shouldReroll(runningTotal)); //reroll if result is too low
 
 
-        } else if (rulesSet == RulesSet.DELUXE) {
+        } else if (rulesEdition == RulesEdition.DELUXE) {
             do {
                 diceRollResult = rollDice();
                 runningTotal += diceRollResult.totalRolled;
@@ -52,7 +48,7 @@ public class Roller {
             while (diceRollResult.allSame); //TARO
 
 
-        } else if ( (rulesSet == RulesSet.FIFTH) && (optionalRules == OptionalRules.LOW_REROLL) ) {
+        } else if ( (rulesEdition == RulesEdition.FIFTH) && (optionalRules == OptionalRules.LOW_REROLL) ) {
             do {
                 diceRollResult = rollDice();
                 runningTotal = diceRollResult.totalRolled;

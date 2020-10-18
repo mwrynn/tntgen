@@ -1,15 +1,15 @@
 package org.mwrynn.tnt.character.attribute;
 
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 public class Attribute {
     private AttributeName name;
     private int value;
     private float multiplier;
-    private RulesSet rulesSet;
+    private RulesEdition rulesEdition;
 
-    public Attribute(RulesSet rulesSet, AttributeName name, int value, float multiplier) {
-        this.rulesSet = rulesSet;
+    public Attribute(RulesEdition rulesEdition, AttributeName name, int value, float multiplier) {
+        this.rulesEdition = rulesEdition;
         this.setName(name);
         this.setValue(value);
         this.setMultiplier(multiplier);
@@ -28,7 +28,7 @@ public class Attribute {
     }
 
     public void setValue(int unmultipliedValue) {
-        if (rulesSet == RulesSet.DELUXE) {
+        if (rulesEdition == RulesEdition.DELUXE) {
             if (multiplier > 1) { //round down "good" multipliers in Deluxe
                 value = (int)Math.floor(unmultipliedValue * multiplier);
             } else { //round up "bad" multipliers in Deluxe

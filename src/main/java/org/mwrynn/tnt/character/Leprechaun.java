@@ -1,13 +1,13 @@
 package org.mwrynn.tnt.character;
 
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 @Deprecated
 public class Leprechaun extends Character {
-    public Leprechaun(RulesSet rulesSet) {
-        super(rulesSet);
+    public Leprechaun(RulesEdition rulesEdition) {
+        super(rulesEdition);
 
-        if ((this.rulesSet == RulesSet.FIFTH)) {
+        if ((this.rulesEdition == RulesEdition.FIFTH)) {
             this.str.setMultiplier(0.5f);
             this.dex.setMultiplier(1.5f);
             this.iq.setMultiplier(1.5f);
@@ -26,7 +26,7 @@ public class Leprechaun extends Character {
         return "Leprechaun";
     }
 
-    public boolean isValidInRulesSet() {
+    public boolean isValidInRulesEdition() {
         return true;
     }
 }

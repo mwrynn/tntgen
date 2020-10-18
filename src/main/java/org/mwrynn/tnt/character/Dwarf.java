@@ -1,13 +1,13 @@
 package org.mwrynn.tnt.character;
 
-import org.mwrynn.tnt.rules.RulesSet;
+import org.mwrynn.tnt.rules.RulesEdition;
 
 @Deprecated
 public class Dwarf extends Character {
-    public Dwarf(RulesSet rulesSet) {
-        super(rulesSet);
-        assert isValidInRulesSet() : "Dwarves in the Deluxe rules must be created as Gristlegrim or Midgardian.";
-        this.rulesSet = rulesSet;
+    public Dwarf(RulesEdition rulesEdition) {
+        super(rulesEdition);
+        assert isValidInRulesEdition() : "Dwarves in the Deluxe rules must be created as Gristlegrim or Midgardian.";
+        this.rulesEdition = rulesEdition;
 
         this.str.setMultiplier(2.0f);
         this.con.setMultiplier(2.0f);
@@ -18,7 +18,7 @@ public class Dwarf extends Character {
         return "Dwarf";
     }
 
-    public boolean isValidInRulesSet() {
-        return rulesSet != RulesSet.DELUXE;
+    public boolean isValidInRulesEdition() {
+        return rulesEdition != RulesEdition.DELUXE;
     }
 }
