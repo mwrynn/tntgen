@@ -15,6 +15,8 @@ import org.mwrynn.tnt.stat.StatNames;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +140,7 @@ public class TntGen {
                 .filter(k -> tntOptions.getKinList().contains(k.getKinName().toUpperCase()))
                 .collect(Collectors.toList()); ;
 
-        for (OptionalRules optionalRules : OptionalRules.values()) {
+        for (OptionalRules optionalRules : tntOptions.getOptionalList()) {
             for (KinDef kinDef : applicableKinDefs) {
                 rulesKinList.add(new RulesPlusKin(kinDef.getRulesSet(), optionalRules, kinDef));
             }
@@ -277,8 +279,9 @@ public class TntGen {
         }
 
         Set<String> validKinSet = tntGen.kinConf.getKinDefs().stream().map(KinDef::getKinName).collect(Collectors.toSet());
+        Set<OptionalRules> validOptionalRulesSet = new HashSet<>(Arrays.asList(OptionalRules.values()));
 
-        OptionsReader optionsReader = new OptionsReader(validKinSet);
+        OptionsReader optionsReader = new OptionsReader(validKinSet, validOptionalRulesSet);
         tntGen.tntOptions = optionsReader.parse(args);
         if(tntGen.tntOptions == null) {
             optionsReader.printHelp();

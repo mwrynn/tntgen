@@ -1,8 +1,10 @@
 package org.mwrynn.tnt.options;
 
+import org.mwrynn.tnt.rules.OptionalRules;
 import org.mwrynn.tnt.stat.StatNames;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -12,19 +14,26 @@ public class TntOptions {
     private boolean outputTiming = false;
     private String delimiter = ",";
     private List<String> statNameList;
-    private StatNames validStatNames;
+    private final StatNames validStatNames;
     private boolean header = false;
     private Set<String> validKinSet;
     private List<String> kinList;
+    private List<OptionalRules> optionalList;
+    private Set<OptionalRules> validOptionalSet;
 
     public TntOptions() {
         validStatNames = new StatNames();
     }
 
-    public TntOptions(Set<String> validKinSet) {
+    public TntOptions(Set<String> validKinSet, Set<OptionalRules> validOptionalSet) {
         this();
         this.validKinSet = validKinSet;
-        this.kinList = new ArrayList(validKinSet); //default to using them all
+        this.validOptionalSet = validOptionalSet;
+
+        this.kinList = new ArrayList<>(validKinSet); //default to using them all
+
+        this.optionalList = new ArrayList<>(); //default to using them all
+        this.optionalList.addAll(Arrays.asList(OptionalRules.values()));
     }
 
     public void setNumRolls(int numRolls) {
@@ -109,4 +118,36 @@ public class TntOptions {
     public void setHeader(boolean header) {
         this.header = header;
     }
+
+    public void addOptional(OptionalRules optionalRules) {
+        if (optionalList== null) {
+            optionalList = new ArrayList<>();
+        }
+
+        boolean found = false;
+        for (OptionalRules validOptional : validOptionalSet) {
+            if(optionalRules.equals(validOptional)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            throw new RuntimeException("invalid optional rules argument: " + optionalRules);
+        }
+
+        optionalList.add(optionalRules);
+    }
+
+    public void setOptionalList(List<OptionalRules> optionalList) {
+        this.optionalList = null;
+        for (OptionalRules optionalRules : optionalList) {
+            addOptional(optionalRules);
+        }
+    }
+
+    public List<OptionalRules> getOptionalList() {
+        return optionalList;
+    }
+
 }
