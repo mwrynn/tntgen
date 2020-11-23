@@ -16,6 +16,8 @@ You need to have the JDK 8 or greater installed, and have git and maven installe
 
 4. This should output a file, named something like ./tntgen/target/tntgen-1.0-SNAPSHOT.jar. You will use this jar with your java command. (See below.)
 
+Command line args are defined immediately below:
+
 ```
 usage: tntgen
  -d,--delimiter <arg>   output field delimiter; default is ,
