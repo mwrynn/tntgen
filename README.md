@@ -2,7 +2,20 @@
 This is a tool used for the Tunnels & Trolls, the second roleplaying game ever published, written by Ken St. Andre and published by Flying Buffalo, Inc. This tool, tntgen, is designed to roll up a large number of character attributes of all different kindreds, using various rules sets. Output can be used for statistical analysis and comparisons can be made between rules sets, kindreds, etc. Currently only outputs combat adds data but more is to come.  
   
   
-Written in Java 1.8, but not sure offhand which other version it's compatible with. I suspect the newest feature used is ThreadLocalRandom, which was new in JDK 7.  
+Written in Java 1.8, but not sure offhand which other version it's compatible with. I suspect the newest feature used is ThreadLocalRandom, which was new in JDK 7.
+
+For now to run this program you must build it for yourself. This may be new to you if you're not a programmer, but for now I have not attached a build to this github repo, so that's what we've got. :) 
+
+You need to have the JDK 8 or greater installed, and have git and maven installed. 
+
+1. Clone this repo by going to https://github.com/mwrynn/tntgen/ and clicking the green "Code" button which will help you get set up.
+
+2. Go the the tntgen directory in your command prompt/terminal.
+
+3. Build by running the maven command: mvn package
+
+4. This should output a file, named something like ./tntgen/target/tntgen-1.0-SNAPSHOT.jar. You will use this jar with your java command. (See below.)
+
 ```
 usage: tntgen
  -d,--delimiter <arg>   output field delimiter; default is ,
