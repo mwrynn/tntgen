@@ -185,7 +185,7 @@ public class TntGen {
         );
 
         if(tntOptions.getHeader()) {
-            System.out.println("EDITION" + tntOptions.getDelimiter() + "OPTIONALRULES" + tntOptions.getDelimiter() + "KIN" + tntOptions.getDelimiter() + "STAT" + tntOptions.getDelimiter() + "COUNT");
+            System.out.println("EDITION" + tntOptions.getDelimiter() + "OPTIONALRULES" + tntOptions.getDelimiter() + "KIN" + tntOptions.getDelimiter() + "STAT" + tntOptions.getDelimiter() + "VALUE" + tntOptions.getDelimiter() + "COUNT");
         }
 
         for (Map.Entry<MapKey, Long> entry : mapSorted.entrySet()) {
