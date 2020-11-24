@@ -116,6 +116,4 @@ FIFTH,NONE,HUMAN,STR,13,1
 FIFTH,NONE,HUMAN,STR,14,2
 FIFTH,NONE,HUMAN,STR,16,1
 execution time: 350 ms
-
-Process finished with exit code 0
 ```
