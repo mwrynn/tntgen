@@ -26,7 +26,7 @@ public class OptionsReader {
     private Set<OptionalRules> validOptionalRulesSet;
     private Set<RulesEdition> validRulesEditionSet;
 
-    public OptionsReader(final Set<String> validKinSet, final Set<OptionalRules> validOptionalRulesSet, final Set<RulesEdition> validRulesEditionSet) {
+    public OptionsReader(Set<String> validKinSet, Set<OptionalRules> validOptionalRulesSet, Set<RulesEdition> validRulesEditionSet) {
         this.validKinSet = validKinSet;
         this.validOptionalRulesSet = validOptionalRulesSet;
         this.validRulesEditionSet = validRulesEditionSet;
