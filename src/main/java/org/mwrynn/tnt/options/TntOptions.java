@@ -27,11 +27,14 @@ public class TntOptions {
     private List<RulesEdition> rulesEditionList;
     private Set<RulesEdition> validRulesEditionSet;
 
+    private boolean isAggregatedOutput = true;
+
     public TntOptions() {
         validStatNames = new StatNames();
     }
 
-    public TntOptions(Set<String> validKinSet, Set<OptionalRules> validOptionalSet, Set<RulesEdition> validRulesEditionSet) {
+    public TntOptions(Set<String> validKinSet, Set<OptionalRules> validOptionalSet,
+                      Set<RulesEdition> validRulesEditionSet) {
         this();
         this.validKinSet = validKinSet;
         this.validOptionalSet = validOptionalSet;
@@ -44,7 +47,6 @@ public class TntOptions {
 
         this.rulesEditionList = new ArrayList<>(); //default to using them all
         this.rulesEditionList.addAll(Arrays.asList(RulesEdition.values()));
-
     }
 
     public void setNumRolls(int numRolls) {
@@ -190,6 +192,14 @@ public class TntOptions {
 
     public List<RulesEdition> getRulesEditionList() {
         return rulesEditionList;
+    }
+
+    public boolean getAggregatedOutput() {
+        return isAggregatedOutput;
+    }
+
+    public void setIsAggregatedOutput(boolean isAggregatedOutput) {
+        this.isAggregatedOutput = isAggregatedOutput;
     }
 
 }

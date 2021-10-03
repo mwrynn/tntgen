@@ -1,5 +1,5 @@
 package org.mwrynn.tnt.output;
 
 public interface Outputter {
-    void output();
+    void output(boolean hasHeader, String delimiter);
 }

@@ -2,7 +2,15 @@ package org.mwrynn.tnt.character;
 
 import org.mwrynn.tnt.character.attribute.Attribute;
 import org.mwrynn.tnt.character.attribute.AttributeName;
+import org.mwrynn.tnt.rules.OptionalRules;
 import org.mwrynn.tnt.rules.RulesEdition;
+import org.mwrynn.tnt.stat.Stat;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.mwrynn.tnt.character.attribute.AttributeName.*;
+import static org.mwrynn.tnt.stat.StatNames.ADDS;
 
 public class Character {
     protected Attribute str;
@@ -15,15 +23,17 @@ public class Character {
     protected Attribute chr;
     protected Attribute wiz;
 
-    public RulesEdition rulesEdition = RulesEdition.DELUXE; //default rulesEdition is DELUXE
+    private RulesEdition rulesEdition = RulesEdition.DELUXE; //default rulesEdition is DELUXE
+    private OptionalRules optionalRules;
 
     private KinDef kinDef;
 
-    public Character(RulesEdition rulesEdition) {
+    public Character(RulesEdition rulesEdition, OptionalRules optionalRules) {
         this.rulesEdition = rulesEdition;
-        this.str = new Attribute(rulesEdition, AttributeName.STR, 0, 1.0f);
-        this.dex = new Attribute(rulesEdition, AttributeName.DEX, 0, 1.0f);
-        this.con = new Attribute(rulesEdition, AttributeName.CON, 0, 1.0f);
+        this.optionalRules = optionalRules;
+        this.str = new Attribute(rulesEdition, STR, 0, 1.0f);
+        this.dex = new Attribute(rulesEdition, DEX, 0, 1.0f);
+        this.con = new Attribute(rulesEdition, CON, 0, 1.0f);
         this.spd = new Attribute(rulesEdition, AttributeName.SPD, 0, 1.0f);
         this.iq = new Attribute(rulesEdition, AttributeName.IQ, 0, 1.0f);
         this.lk = new Attribute(rulesEdition, AttributeName.LK, 0, 1.0f);
@@ -140,6 +150,23 @@ public class Character {
         return kinDef;
     }
 
+    public void setRulesEdition(RulesEdition rulesEdition) {
+        this.rulesEdition = rulesEdition;
+    }
+
+    public RulesEdition getRulesEdition() {
+        return rulesEdition;
+    }
+
+    public void setOptionalRules(OptionalRules optionalRules) {
+        this.optionalRules = optionalRules;
+    }
+
+    public OptionalRules getOptionalRules() {
+        return optionalRules;
+    }
+
+
     public void setKinDef(KinDef kinDef) {
         this.kinDef = kinDef;
         this.str.setMultiplier(kinDef.getStrMult());
@@ -149,7 +176,35 @@ public class Character {
         this.iq.setMultiplier(kinDef.getIqMult());
         this.lk.setMultiplier(kinDef.getLkMult());
         this.chr.setMultiplier(kinDef.getChrMult());
-        this.spd.setMultiplier(kinDef.getSpdMult());
+        this.wiz.setMultiplier(kinDef.getWizMult());
     }
 
+    public List<Attribute> getAttributes() {
+        List<Attribute> attributes = new LinkedList<>();
+        attributes.add(this.str);
+        attributes.add(this.dex);
+        attributes.add(this.con);
+        attributes.add(this.spd);
+        attributes.add(this.iq);
+        attributes.add(this.lk);
+        attributes.add(this.chr);
+        attributes.add(this.wiz);
+
+        return attributes;
+    }
+
+    public List<Stat> getStats() {
+        List<Stat> stats = new LinkedList<>();
+        stats.add(new Stat(STR.toString(), this.getStr().getValue()));
+        stats.add(new Stat(DEX.toString(), this.getDex().getValue()));
+        stats.add(new Stat(CON.toString(), this.getCon().getValue()));
+        stats.add(new Stat(SPD.toString(), this.getSpd().getValue()));
+        stats.add(new Stat(IQ.toString(), this.getIq().getValue()));
+        stats.add(new Stat(LK.toString(), this.getLk().getValue()));
+        stats.add(new Stat(CHR.toString(), this.getChr().getValue()));
+        stats.add(new Stat(SPD.toString(), this.getSpd().getValue()));
+        stats.add(new Stat(ADDS, this.getAdds()));
+
+        return stats;
+    }
 }
