@@ -1,6 +1,5 @@
 package org.mwrynn.tnt.output;
 
-import org.mwrynn.tnt.TntGen;
 import org.mwrynn.tnt.stat.StatsMap;
 import org.mwrynn.tnt.stat.StatsMap.StatsMapKey;
 
@@ -11,15 +10,12 @@ import java.util.stream.Stream;
 
 public class StatsOutputter implements Outputter {
     StatsMap statsMap;
-    boolean hasHeader;
-    String delimiter;
 
-    public StatsOutputter(StatsMap statsMap, boolean hasHeader, String delimiter) {
+    public StatsOutputter(StatsMap statsMap) {
         this.statsMap = statsMap;
-        this.hasHeader = hasHeader;
-        this.delimiter = delimiter;
     }
-    public void output() {
+
+    public void output(boolean hasHeader, String delimiter) {
         Stream<Map.Entry<StatsMapKey, Long>> stream = statsMap
                 .entrySet()
                 .stream()
@@ -34,11 +30,12 @@ public class StatsOutputter implements Outputter {
         }
 
         for (Map.Entry<StatsMapKey, Long> entry : mapSorted.entrySet()) {
-            System.out.println(keyString(entry.getKey()) + delimiter + entry.getValue());
+            System.out.println(keyString(entry.getKey(), delimiter) + delimiter + entry.getValue());
         }
     }
 
-    private String keyString(StatsMapKey key) {
-        return key.rulesPlusKin.rulesEdition + delimiter + key.rulesPlusKin.optionalRules + delimiter + key.rulesPlusKin.kinDef.getKinName() + delimiter + key.stat.getStatName() + delimiter + key.stat.getValue();
+    private String keyString(StatsMapKey key, String delimiter) {
+        return key.rulesPlusKin.rulesEdition + delimiter + key.rulesPlusKin.optionalRules + delimiter +
+                key.rulesPlusKin.kinDef.getKinName() + delimiter + key.stat.getStatName() + delimiter + key.stat.getValue();
     }
 }

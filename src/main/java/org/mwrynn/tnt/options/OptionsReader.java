@@ -38,7 +38,8 @@ public class OptionsReader {
         options.addOption("p",  "parallel", true, "number of parallel threads");
         options.addOption("d",  "delimiter", true, "output field delimiter; default is ,");
 
-        Option statsOption = new Option("s", "stats", true, "comma-separated list of the stats to collect and output");
+        Option statsOption = new Option("s", "stats", true, "comma-separated list of the stats to collect " +
+                "and output; ignored if individual character output is enabled; Valid stats: ADDS,STR,DEX,CON,SPD,IQ,LK,CHR,WIZ");
         statsOption.setArgs(Option.UNLIMITED_VALUES);
         statsOption.setValueSeparator(',');
         statsOption.setType(List.class);
@@ -63,6 +64,8 @@ public class OptionsReader {
         rulesEditionOption.setValueSeparator(',');
         rulesEditionOption.setType(List.class);
         options.addOption(rulesEditionOption);
+
+        options.addOption("c",  "char-output", false, "whether to output individual character stats or aggregated stats; default is false (aggregated)");
 
         TntOptions tntOptions = new TntOptions(validKinSet, validOptionalRulesSet, validRulesEditionSet);
 
@@ -95,6 +98,10 @@ public class OptionsReader {
 
             if (line.hasOption("header")) {
                 tntOptions.setHeader(true);
+            }
+
+            if (line.hasOption("char-output")) {
+                tntOptions.setIsAggregatedOutput(false);
             }
 
             if (line.hasOption("kin")) {

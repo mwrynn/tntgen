@@ -7,38 +7,35 @@ import org.mwrynn.tnt.character.KinDef;
 import org.mwrynn.tnt.dice.Dice;
 import org.mwrynn.tnt.options.OptionsReader;
 import org.mwrynn.tnt.options.TntOptions;
+import org.mwrynn.tnt.output.CharacterOutputter;
+import org.mwrynn.tnt.output.Outputter;
 import org.mwrynn.tnt.output.StatsOutputter;
 import org.mwrynn.tnt.roller.Roller;
 import org.mwrynn.tnt.rules.OptionalRules;
 import org.mwrynn.tnt.rules.RulesEdition;
-import org.mwrynn.tnt.stat.Stat;
-import org.mwrynn.tnt.stat.StatNames;
 import org.mwrynn.tnt.stat.StatsCollector;
 import org.mwrynn.tnt.stat.StatsMap;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static org.mwrynn.tnt.character.attribute.AttributeName.*;
 
 public class TntGen {
     private TntOptions tntOptions;
     private KinConf kinConf;
 
     StatsMap statsMap = new StatsMap();
+    List<Character> characterList = Collections.synchronizedList(new LinkedList<>());
+    Outputter outputter;
 
     private List<RulesPlusKin> makeRulesKinCombos() {
         ArrayList<RulesPlusKin> rulesKinList = new ArrayList<>();
@@ -57,7 +54,7 @@ public class TntGen {
         return rulesKinList;
     }
 
-    public void generate() {
+    public void generate(boolean aggregate) {
         ExecutorService executorService = Executors.newFixedThreadPool(tntOptions.getNumThreads());
 
         //set up combinations of rulesEdition + kin
@@ -65,9 +62,16 @@ public class TntGen {
 
         for (RulesPlusKin rulesKin : rulesKinList) {
             executorService.execute(() -> {
-                Character c = new Character(rulesKin.rulesEdition);
-                c.setKinDef(rulesKin.kinDef);
-                generateLoop(c, rulesKin);
+                for (int i = 0; i < tntOptions.getNumRolls(); i++) {
+                    Character c = new Character(rulesKin.rulesEdition, rulesKin.optionalRules);
+                    c.setKinDef(rulesKin.kinDef);
+                    rollAndPopulateCharacterAttributes(c, rulesKin);
+                    if (aggregate) {
+                        collectAgg(c, rulesKin);
+                    } else {
+                        collectChar(c);
+                    }
+                }
             });
         }
 
@@ -79,25 +83,37 @@ public class TntGen {
             throw new RuntimeException(e);
         }
 
-        new StatsOutputter(statsMap, tntOptions.getHeader(), tntOptions.getDelimiter()).output();
+        if(aggregate) {
+            outputter = new StatsOutputter(statsMap);
+        } else {
+            outputter = new CharacterOutputter(characterList);
+        }
+        outputter.output(tntOptions.getHeader(), tntOptions.getDelimiter());
     }
 
-    private void generateLoop(Character c, RulesPlusKin rulesPlusKin) {
-        Dice dice = new Dice(3, 6);
+    private void rollAndPopulateCharacterAttributes(Character c, RulesPlusKin rulesPlusKin) {
+        Dice dice = new Dice(3);
         Roller roller = new Roller(rulesPlusKin.rulesEdition, rulesPlusKin.optionalRules, dice);
 
-        for (int i = 0; i < tntOptions.getNumRolls(); i++) {
+        //for (int i = 0; i < tntOptions.getNumRolls(); i++) {
             c.setStr(roller.rollAttribute(c.getStr()));
             c.setDex(roller.rollAttribute(c.getDex()));
             c.setCon(roller.rollAttribute(c.getCon()));
             c.setSpd(roller.rollAttribute(c.getSpd()));
             c.setIq(roller.rollAttribute(c.getIq()));
             c.setLk(roller.rollAttribute(c.getLk()));
-            c.setChr(roller.rollAttribute(c.getStr()));
-            c.setWiz(roller.rollAttribute(c.getChr()));
+            c.setChr(roller.rollAttribute(c.getChr()));
+            c.setWiz(roller.rollAttribute(c.getWiz()));
+        //}
+    }
 
-            new StatsCollector(statsMap, tntOptions.getStatNameList()).collectAllStats(c, rulesPlusKin);
-        }
+    private void collectAgg(Character c, RulesPlusKin rulesPlusKin) {
+        StatsCollector statsCollector = new StatsCollector(statsMap, tntOptions.getStatNameList());
+        statsCollector.collectAllStats(c, rulesPlusKin);
+    }
+
+    private void collectChar(Character c) {
+        characterList.add(c);
     }
 
     public static void main(String[] args) {
@@ -124,7 +140,7 @@ public class TntGen {
             System.exit(1);
         }
 
-        tntGen.generate();
+        tntGen.generate(tntGen.tntOptions.getAggregatedOutput());
 
         if (tntGen.tntOptions.getOutputTiming()) {
             long endTime = System.nanoTime();;

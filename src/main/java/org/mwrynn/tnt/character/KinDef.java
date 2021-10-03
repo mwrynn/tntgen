@@ -148,4 +148,8 @@ public class KinDef implements Comparable<KinDef> {
         return this.getKinName().compareTo(other.getKinName());
     }
 
+    @Override
+    public String toString() {
+        return kinName;
+    }
 }

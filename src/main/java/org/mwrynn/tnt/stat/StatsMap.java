@@ -2,7 +2,6 @@ package org.mwrynn.tnt.stat;
 
 import org.mwrynn.tnt.RulesPlusKin;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 

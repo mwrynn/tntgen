@@ -20,6 +20,8 @@ Command line args are defined immediately below:
 
 ```
 usage: tntgen
+ -c,--char-output       whether to output individual character stats or
+                        aggregated stats; default is false (aggregated)
  -d,--delimiter <arg>   output field delimiter; default is ,
  -e,--edition <arg>     comma-separated list of the rules editions to use. Valid editions at this time: FIFTH,DELUXE
  -h,--header            output column headers
@@ -31,7 +33,8 @@ usage: tntgen
  -r,--rolls <arg>       number of rolls per combination of rules and
                         kindred
  -s,--stats <arg>       comma-separated list of the stats to collect and
-                        output. Valid stats: ADDS,STR,DEX,CON,SPD,IQ,LK,CHR,WIZ
+                        output; ignored if individual character output is enabled;
+                        Valid stats: ADDS,STR,DEX,CON,SPD,IQ,LK,CHR,WIZ
  -t,--time              display execution time
 ```
 
