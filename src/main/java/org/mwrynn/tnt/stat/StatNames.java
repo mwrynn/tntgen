@@ -3,7 +3,6 @@ package org.mwrynn.tnt.stat;
 import org.mwrynn.tnt.character.attribute.AttributeName;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

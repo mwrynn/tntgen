@@ -7,7 +7,6 @@ import org.mwrynn.tnt.stat.StatsMap.StatsMapKey;
 import java.util.List;
 
 import static org.mwrynn.tnt.character.attribute.AttributeName.*;
-import static org.mwrynn.tnt.character.attribute.AttributeName.WIZ;
 
 public class StatsCollector {
     private StatsMap statsMap;
