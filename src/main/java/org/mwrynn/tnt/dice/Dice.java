@@ -1,9 +1,9 @@
 package org.mwrynn.tnt.dice;
 
 public class Dice {
-    private Die[] dice;
+    private final Die[] dice;
     private boolean allSame = false;
-    private static int DUMMY_ROLL = -999;
+    private static final int DUMMY_ROLL = -999;
 
     Dice() {
         this(3);
