@@ -6,7 +6,7 @@ Written in Java 1.8, but not sure which other versions it's compatible with, as 
 
 ## HOW TO RUN THIS PROGRAM:
 
-For now to run this program you must build it for yourself. This may be new to you if you're not a programmer, but for now I have not attached a build to this github repo, so that's what we've got. :) 
+For now to run this program you must build it from the source code yourself. This may be new to you if you're not a programmer, but for now I have not attached a build to this github repo, so that's what we've got. :) 
 
 ### PREREQUISITES:
 You need to have the JDK 8 or greater installed, and have Git and Maven installed.
