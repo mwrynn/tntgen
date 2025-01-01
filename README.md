@@ -19,15 +19,42 @@ To verify that you have a JDK installed and available in your path, you can try 
 javac -version
 ```
 
-If available it should output something like:
+If all is well, the output should look something like:
 ```
+$ javac -version
 javac 17.0.10
 ```
 #### GIT
-You can download Git from [here](https://git-scm.com/downloads). Then install it.
+You can download Git from [here](https://git-scm.com/downloads). Then install it. 
+To verify that it is installed and in your path, you can try running the following from your command prompt/terminal:
+
+```
+git --version
+```
+
+If all is well, the output should look something like:
+```
+$ git --version
+git version 2.39.5 (Apple Git-154)
+```
 
 #### MAVEN
 You can download Maven from [here](https://maven.apache.org/download.cgi). Then install it.
+To verify that it is installed and in your path, you can try running the following from your command prompt/terminal:
+```
+mvn --version
+```
+If all is well, the output should look something like:
+```
+$ mvn --version
+Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
+Maven home: /opt/homebrew/Cellar/maven/3.9.9/libexec
+Java version: 17.0.10, vendor: Amazon.com Inc., runtime: /Users/mwrynn/.sdkman/candidates/java/17.0.10-amzn
+Default locale: en_US, platform encoding: UTF-8
+OS name: "mac os x", version: "15.1.1", arch: "aarch64", family: "mac"
+```
+
+(The key thing to look for when verifying these programs are installed is that you get no error such as `command not found`.)
 
 ### Running TNTGEN:
 1. Clone this code repository by entering in your command prompt/terminal:
