@@ -1,4 +1,4 @@
-f# Tunnels & Trolls Character Statistics Generator
+# Tunnels & Trolls Character Statistics Generator
 This is a tool used for Tunnels & Trolls, the second roleplaying game ever published, designed and written by Ken St. Andre, et. al, and published by Flying Buffalo, Inc. This tool, TNTGEN, is designed to roll up a large number of character attributes of all different kindreds, using various rules sets. Output can be used for statistical analysis and comparisons can be made between rules sets, kindreds, etc.   
   
   
