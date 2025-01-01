@@ -1,5 +1,5 @@
 # Tunnels & Trolls Character Statistics Generator
-This is a tool used for Tunnels & Trolls, the second roleplaying game ever published, designed and written by Ken St. Andre, et. al, and published by Flying Buffalo, Inc. This tool, tntgen, is designed to roll up a large number of character attributes of all different kindreds, using various rules sets. Output can be used for statistical analysis and comparisons can be made between rules sets, kindreds, etc.   
+This is a tool used for Tunnels & Trolls, the second roleplaying game ever published, designed and written by Ken St. Andre, et. al, and published by Flying Buffalo, Inc. This tool, TNTGEN, is designed to roll up a large number of character attributes of all different kindreds, using various rules sets. Output can be used for statistical analysis and comparisons can be made between rules sets, kindreds, etc.   
   
   
 Written in Java 1.8, but not sure which other versions it's compatible with, as I haven't bothered to test that. I suspect the newest feature used is ThreadLocalRandom, which was introduced in JDK 7.
@@ -37,9 +37,9 @@ git clone https://github.com/mwrynn/tntgen.git
 
 This will create a directory called `tntgen`, populated with all the files in this code repository.
 
-2. Go the the tntgen directory in your command prompt/terminal. For example: `cd ./tntgen`
+2. Go the the `tntgen` directory in your command prompt/terminal. For example: `cd ./tntgen`
 
-3. Build tntgen by running the maven command: `mvn package`. This should output a whole bunch of stuff, but what you're looking for is the very end of the output to look something like:
+3. Build `tntgen` by running the maven command: `mvn package`. This should output a whole bunch of stuff, but what you're looking for is the very end of the output to look something like:
 ```
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
