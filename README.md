@@ -1,4 +1,4 @@
-# Tunnels & Trolls Character Statistics Generator
+f# Tunnels & Trolls Character Statistics Generator
 This is a tool used for Tunnels & Trolls, the second roleplaying game ever published, designed and written by Ken St. Andre, et. al, and published by Flying Buffalo, Inc. This tool, TNTGEN, is designed to roll up a large number of character attributes of all different kindreds, using various rules sets. Output can be used for statistical analysis and comparisons can be made between rules sets, kindreds, etc.   
   
   
@@ -26,6 +26,7 @@ javac 17.0.10
 ```
 #### GIT
 You can download Git from [here](https://git-scm.com/downloads). Then install it. 
+
 To verify that it is installed and in your path, you can try running the following from your command prompt/terminal:
 
 ```
@@ -40,6 +41,7 @@ git version 2.39.5 (Apple Git-154)
 
 #### MAVEN
 You can download Maven from [here](https://maven.apache.org/download.cgi). Then install it.
+
 To verify that it is installed and in your path, you can try running the following from your command prompt/terminal:
 ```
 mvn --version
