@@ -49,7 +49,7 @@ This will create a directory called `tntgen`, populated with all the files in th
 [INFO] ------------------------------------------------------------------------
 ```
 
-5. This should create a file, named something like `./tntgen/target/tntgen-1.0-SNAPSHOT.jar`. You will use this jar with your java command. (See below.)
+4. This should create a file, named something like `./tntgen/target/tntgen-1.0-SNAPSHOT.jar`. You will use this jar with your java command. (See below.)
 
 Command line args are defined immediately below:
 
