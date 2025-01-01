@@ -58,15 +58,15 @@ OS name: "mac os x", version: "15.1.1", arch: "aarch64", family: "mac"
 
 (The key thing to look for when verifying these programs are installed is that you get no error such as `command not found`.)
 
-### Running TNTGEN:
-1. Clone this code repository by entering in your command prompt/terminal:
+### Downloading, Building and Running TNTGEN:
+1. Download this code repository by `git clone`ing it. To do so, enter in your command prompt/terminal:
 ```
 git clone https://github.com/mwrynn/tntgen.git
 ```
 
 This will create a directory called `tntgen`, populated with all the files in this code repository.
 
-2. Go the the `tntgen` directory in your command prompt/terminal. For example: `cd ./tntgen`
+2. Go the the newly created `tntgen` directory in your command prompt/terminal. For example: `cd ./tntgen`
 
 3. Build `tntgen` by running the maven command: `mvn package`. This should output a whole bunch of stuff, but what you're looking for is the very end of the output to look something like:
 ```
@@ -78,9 +78,9 @@ This will create a directory called `tntgen`, populated with all the files in th
 [INFO] ------------------------------------------------------------------------
 ```
 
-4. This should create a file, named something like `./tntgen/target/tntgen-1.0-SNAPSHOT.jar`. In other words, the Maven command will created a directory called `target` under the `tntgen` directory. It will then populate `target` with a a file with the `.jar` extension. You will use this jar with your java command. (See below.)
+4. This should create a jar file, the path being something like `./tntgen/target/tntgen-1.0-SNAPSHOT.jar`. In other words, the Maven command will created a directory called `target` under the `tntgen` directory. It will then populate `target` with a a file with the `.jar` extension called `tntgen-1.0-SNAPSHOT.jar` (or similar). This is the jar to execute with your java command. (See below.)
 
-5. Run the `java` command. The exact command depends on the exact options you wish to set. Below is an example command that may work for you:
+5. Run the `java` command. The exact command depends on the options you wish to set. Below is an example command that you can try for starters, then modify it as you see fit:
 ```
 java -jar tntgen-1.0-SNAPSHOT.jar -r 10 -h -t -e FIFTH -k HUMAN,DWARF -s STR,ADDS
 ```
