@@ -12,7 +12,7 @@ For now to run this program you must build it for yourself. This may be new to y
 You need to have the JDK 8 or greater installed, and have Git and Maven installed.
 
 #### JDK:
-You can install a JDK from [here](https://www.oracle.com/java/technologies/downloads/).
+You can download a JDK from [here](https://www.oracle.com/java/technologies/downloads/). Then install it.
 
 To verify that you have a JDK installed and available in your path, you can try running the following from your command prompt/terminal:
 ```
@@ -24,10 +24,10 @@ If available it should output something like:
 javac 17.0.10
 ```
 #### GIT
-You can install Git from [here](https://git-scm.com/downloads)
+You can download Git from [here](https://git-scm.com/downloads). Then install it.
 
 #### MAVEN
-You can install Maven from [here](https://maven.apache.org/download.cgi).
+You can download Maven from [here](https://maven.apache.org/download.cgi). Then install it.
 
 ### Running TNTGEN:
 1. Clone this code repository by entering in your command prompt/terminal:
