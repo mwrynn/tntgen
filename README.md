@@ -49,9 +49,15 @@ This will create a directory called `tntgen`, populated with all the files in th
 [INFO] ------------------------------------------------------------------------
 ```
 
-4. This should create a file, named something like `./tntgen/target/tntgen-1.0-SNAPSHOT.jar`. You will use this jar with your java command. (See below.)
+4. This should create a file, named something like `./tntgen/target/tntgen-1.0-SNAPSHOT.jar`. In other words, the Maven command will created a directory called `target` under the `tntgen` directory. It will then populate `target` with a a file with the `.jar` extension. You will use this jar with your java command. (See below.)
 
-Command line args are defined immediately below:
+5. Run the `java` command. The exact command depends on the exact options you wish to set. Below is an example command that may work for you:
+```
+java -jar tntgen-1.0-SNAPSHOT.jar -r 10 -h -t -e FIFTH -k HUMAN,DWARF -s STR,ADDS
+```
+The above command means: Generate 10 rolls for each combination of kin HUMAN and DWARF, stats STR and ADDS, FIFTH edition only, do not specify any optional rules therefore default to all of them -- NONE,LOW_REROLL. Roll 10 times for each combination. Display header. Display time to generate.
+
+More detailed info about the command line arguments available:
 
 ```
 usage: tntgen
@@ -95,7 +101,7 @@ For example:
 execution time: 858 ms
 ```
 
-Full example of execution and output. Generate 10 rolls of each of every combination of kin HUMAN and DWARF, stats STR and ADDS, FIFTH edition only, do not specify any optional rules therefore default to all of them -- NONE,LOW_REROLL. Roll 10 times for each combination. Display header. Display time to generate.
+Full example of the command from above, execution and output. 
 ```
 java -jar tntgen-1.0-SNAPSHOT.jar -r 10 -h -t -e FIFTH -k HUMAN,DWARF -s STR,ADDS
 EDITION,OPTIONALRULES,KIN,STAT,COUNT
@@ -155,3 +161,5 @@ FIFTH,NONE,HUMAN,STR,14,2
 FIFTH,NONE,HUMAN,STR,16,1
 execution time: 350 ms
 ```
+
+Enjoy!
