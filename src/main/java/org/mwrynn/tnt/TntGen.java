@@ -121,8 +121,23 @@ public class TntGen {
 
         TntGen tntGen = new TntGen();
 
+        final Set<OptionalRules> validOptionalRulesSet = new HashSet<>(Arrays.asList(OptionalRules.values()));
+        final Set<RulesEdition> validRulesEditionSet = new HashSet<>(Arrays.asList(RulesEdition.values()));
+
+        OptionsReader optionsReader = new OptionsReader(validOptionalRulesSet, validRulesEditionSet);
+        tntGen.tntOptions = optionsReader.parse(args);
+        if(tntGen.tntOptions == null) {
+            optionsReader.printHelp();
+            System.exit(1);
+        }
+
         try {
-            KinConfReader kinConfReader = new KinConfReader();
+            KinConfReader kinConfReader;
+            if (tntGen.tntOptions.getKinConfPath() != null) {
+                kinConfReader = new KinConfReader(tntGen.tntOptions.getKinConfPath(), true); // Load from file
+            } else {
+                kinConfReader = new KinConfReader(); //use default
+            }
             tntGen.kinConf = kinConfReader.getKinConf();
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,17 +145,10 @@ public class TntGen {
         }
 
         final Set<String> validKinSet = tntGen.kinConf.getKinDefs().stream().map(KinDef::getKinName).collect(Collectors.toSet());
-        final Set<OptionalRules> validOptionalRulesSet = new HashSet<>(Arrays.asList(OptionalRules.values()));
-        final Set<RulesEdition> validRulesEditionSet = new HashSet<>(Arrays.asList(RulesEdition.values()));
-
-        OptionsReader optionsReader = new OptionsReader(validKinSet, validOptionalRulesSet, validRulesEditionSet);
-        tntGen.tntOptions = optionsReader.parse(args);
-        if(tntGen.tntOptions == null) {
-            optionsReader.printHelp();
-            System.exit(1);
-        }
 
         tntGen.generate(tntGen.tntOptions.getAggregatedOutput());
+
+        tntGen.tntOptions.setValidKinSet(validKinSet);
 
         if (tntGen.tntOptions.getOutputTiming()) {
             long endTime = System.nanoTime();;

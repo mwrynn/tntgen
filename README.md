@@ -120,3 +120,8 @@ FIFTH,NONE,HUMAN,STR,14,2
 FIFTH,NONE,HUMAN,STR,16,1
 execution time: 350 ms
 ```
+
+Optional kin configuration:
+You can specify a kindred configuration instead of using the internal default. The kindred configuration defines which kindred exist for which editions, and which attributes are multiplied by which factor 
+
+This feature exists but complete documentation is a TODO

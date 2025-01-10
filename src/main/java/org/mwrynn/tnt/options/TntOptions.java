@@ -4,10 +4,7 @@ import org.mwrynn.tnt.rules.OptionalRules;
 import org.mwrynn.tnt.rules.RulesEdition;
 import org.mwrynn.tnt.stat.StatNames;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TntOptions {
     private int numRolls = 0;
@@ -29,6 +26,8 @@ public class TntOptions {
 
     private boolean isAggregatedOutput = true;
 
+    private String kinConfPath;
+
     public TntOptions() {
         validStatNames = new StatNames();
     }
@@ -41,6 +40,22 @@ public class TntOptions {
         this.validRulesEditionSet = validRulesEditionSet;
 
         this.kinList = new ArrayList<>(validKinSet); //default to using them all
+
+        this.optionalList = new ArrayList<>(); //default to using them all
+        this.optionalList.addAll(Arrays.asList(OptionalRules.values()));
+
+        this.rulesEditionList = new ArrayList<>(); //default to using them all
+        this.rulesEditionList.addAll(Arrays.asList(RulesEdition.values()));
+    }
+
+    public TntOptions(Set<OptionalRules> validOptionalSet,
+                      Set<RulesEdition> validRulesEditionSet) {
+        this();
+        this.validOptionalSet = validOptionalSet;
+        this.validRulesEditionSet = validRulesEditionSet;
+
+        this.kinList = new ArrayList<>();
+        this.validKinSet = new HashSet<>();
 
         this.optionalList = new ArrayList<>(); //default to using them all
         this.optionalList.addAll(Arrays.asList(OptionalRules.values()));
@@ -91,11 +106,10 @@ public class TntOptions {
         if (kinList == null) {
             kinList = new ArrayList<>();
         }
-        if(!validKinSet.stream().anyMatch(kin::equalsIgnoreCase)) {
-            throw new RuntimeException("invalid kin argument: " + kin);
-        }
 
         kinList.add(kin.toUpperCase());
+
+        validateAllKin();
     }
 
     public void setKinList(List<String> kinList) {
@@ -202,4 +216,31 @@ public class TntOptions {
         this.isAggregatedOutput = isAggregatedOutput;
     }
 
+    public String getKinConfPath() {
+        return kinConfPath;
+    }
+
+    public void setKinConfPath(String kinConfPath) {
+        this.kinConfPath = kinConfPath;
+    }
+
+    public Set<String> getValidKinSet() {
+        return validKinSet;
+    }
+
+    public void setValidKinSet(Set<String> validKinSet) {
+        this.validKinSet = validKinSet;
+        validateAllKin();
+    }
+
+    private void validateAllKin() {
+        if (validKinSet.isEmpty()) {
+            return;
+        }
+        for (String kin : kinList) {
+            if (!validKinSet.stream().anyMatch(kin::equalsIgnoreCase)) {
+                throw new RuntimeException("invalid kin argument: " + kin);
+            }
+        }
+    }
 }

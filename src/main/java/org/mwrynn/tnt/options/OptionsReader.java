@@ -32,6 +32,11 @@ public class OptionsReader {
         this.validRulesEditionSet = validRulesEditionSet;
     }
 
+    public OptionsReader(final Set<OptionalRules> validOptionalRulesSet, final Set<RulesEdition> validRulesEditionSet) {
+        this.validOptionalRulesSet = validOptionalRulesSet;
+        this.validRulesEditionSet = validRulesEditionSet;
+    }
+
     public TntOptions parse(String[] args) {
         options.addRequiredOption("r", "rolls", true,"number of rolls per combination of rules and kindred");
         options.addOption("t", "time",false, "display execution time");
@@ -67,13 +72,20 @@ public class OptionsReader {
 
         options.addOption("c",  "char-output", false, "whether to output individual character stats or aggregated stats; default is false (aggregated)");
 
-        TntOptions tntOptions = new TntOptions(validKinSet, validOptionalRulesSet, validRulesEditionSet);
+        options.addOption("n", "kin-conf", true, "path to non-default kin_conf.yaml, which specified kin available, associated them with rules editions and defines attribute multipliers");
+
+        TntOptions tntOptions = new TntOptions(validOptionalRulesSet, validRulesEditionSet);
 
         try {
             // parse the command line arguments
             CommandLine line = parser.parse( options, args );
 
             tntOptions.setNumRolls(Integer.valueOf(line.getOptionValue("rolls")));
+
+            // Handle the configuration path
+            if (line.hasOption("kin-conf")) {
+                tntOptions.setKinConfPath(line.getOptionValue("kin-conf"));
+            }
 
             if (line.hasOption("parallel")) {
                 tntOptions.setNumThreads(Integer.valueOf(line.getOptionValue("parallel")));
