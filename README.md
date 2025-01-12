@@ -13,7 +13,7 @@ TNTGEN was born out of the author's curiosity about how different Tunnels & Trol
 
 * "What are the average combat adds for an Elf? And show me all (supported) editions."
 
-* "If I rolled up a billion fairies, in the Deluxe Edition of T&T, would even a single one be created with a Constitution score of at least 30? (Enough TARO - Triples Add and Reroll - rolls and it could theoretically happen, but fairies divide their CON by 4.)"
+* "If I rolled up a billion fairies, in the Deluxe Edition of T&T, would even a single one be created with a Constitution score of at least 40? (Enough TARO - Triples Add and Reroll - rolls and it could theoretically happen, but fairies divide their CON by 4.)" [I just tried this and the answer is...No! The highest CON rolled by a fairy was 36, which was rolled only a single time in a billion. -Mark W]
 
 It is a command line program that simply takes some options as input, to indicate which Kindreds are of concern, which rules editions are used, how many character rolls should be made, etc. It outputs the totals for each stat value, for the given combinations of kindred, rules editions and so on, in a delimited string format (CSV by default). 
 
