@@ -11,7 +11,7 @@ There are two ways to run this program: download the binary and run it, or build
 ## DOWNLOAD AND RUN TNTGEN:
 ### PREREQUISITES:
 TNTGEN is a Java program, so you must have a Java Runtime Environment, version 8.0 or greater, installed on your machine. 
-To test whether you have a compatible Java version of it installed, open your Command Prompt or Terminal and run:
+To test whether you have a compatible Java version installed, open your Command Prompt or Terminal and run:
 ```
 java -version
 ```
