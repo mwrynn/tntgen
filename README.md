@@ -4,14 +4,34 @@ This is a tool used for Tunnels & Trolls, the second roleplaying game ever publi
   
 Written in Java 1.8, but not sure which other versions it's compatible with, as I haven't bothered to test that. I suspect the newest feature used is ThreadLocalRandom, which was introduced in JDK 7.
 
+## WHAT TNTGEN IS
+TNTGEN was born out of the author's curiosity about how different Tunnels & Trolls character kindreds stack up against each other statistically. Also, account for different rules editions and optional rules. It can help to answer such questions that mankind had pondered for decades, such as:
+
+* "If I roll up a bunch of characters, for all kindreds available, according to the 5th Edition T&T rules, how will their combat adds, in aggregate, compare to each other?" 
+
+* "Which percentage of dwarves in the Deluxe Edition of T&T will be created with a Strength of 30 or greater?"
+
+* "What are the average combat adds for an Elf? And show me all (supported) editions."
+
+* "If I rolled up a billion fairies, in the Deluxe Edition of T&T, would even a single one be created with a Constitution score of at least 40? (Enough TARO - Triples Add and Reroll - rolls and it could theoretically happen, but fairies divide their CON by 4.)" [I just tried this and the answer is...No! The highest CON rolled by a fairy was 36, which was rolled only a single time in a billion. -Mark W]
+
+It is a command line program that simply takes some options as input, to indicate which Kindreds are of concern, which rules editions are used, how many character rolls should be made, etc. It outputs the totals for each stat value, for the given combinations of kindred, rules editions and so on, in a delimited string format (CSV by default). 
+
+(See later in this doc for more info on all the options.)
+
+## WHAT TNTGEN IS NOT
+TNTGEN is not a robust application with a graphical user interface. It is not (at this time) intended for rolling up a single character automatically. It does not deal with gold, equipment, spells and other fancy stuff. 
+
+TNTGEN does not *directly* answer all of the above questions (see [WHAT TNTGEN IS](https://github.com/mwrynn/tntgen/?tab=readme-ov-file#what-tntgen-is) above). It generates many characters (you decide how many) and outputs *totals* aka *sums* for each *value* of the stats you're concerned with. So if you wanted to answer the aforementioned question about the average combat adds for an Elf, this program would give you the total number of times an Elf was rolled with 10 adds, with 9 adds, etc. for the given parameters. But it would not give you the average. You would have to find a way to calculate the average yourself (calculator, spreadsheet software, SQL database, etc.)
+
 ## HOW TO RUN THIS PROGRAM:
 
-There are one of two ways to run this program: download the binary and run it, or build it yourself and run it.
+There are two ways to run this program: download the binary and run it, or build it yourself and run it.
 
 ## DOWNLOAD AND RUN TNTGEN:
 ### PREREQUISITES:
 TNTGEN is a Java program, so you must have a Java Runtime Environment, version 8.0 or greater, installed on your machine. 
-To test whether you have a compatible Java version of it - installed, open your Command Prompt or Terminal and run:
+To test whether you have a compatible Java version installed, open your Command Prompt or Terminal and run:
 ```
 java -version
 ```
@@ -23,8 +43,10 @@ OpenJDK 64-Bit Server VM Corretto-17.0.10.7.1 (build 17.0.10+7-LTS, mixed mode, 
 ```
 It may vary from the above, but the key things are 1) it didn't tell me command not found, so we have confirmed that Java is installed, and 2) we can see the version is 17.0.10 is installed, which is greater than 8. So we should be good to go.
 
+If you do NOT have Java installed, try downloading it from [here](https://www.java.com/en/download/manual.jsp).
+
 ### DOWNLOAD TNTGEN
-Version 0.1 is the current version. You can download it from: https://github.com/mwrynn/tntgen/releases/download/v0.1/tntgen-0.1.jar
+Version 0.1 is the current version. You can download it from [here](https://github.com/mwrynn/tntgen/releases/download/v0.1/tntgen-0.1.jar) on Github.
 
 ### RUN TNTGEN
 1. Move tntgen-0.1.jar from your Downloads folder to wherever you'd like to keep it.
