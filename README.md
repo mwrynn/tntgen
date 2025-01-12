@@ -7,18 +7,22 @@ Written in Java 1.8, but not sure which other versions it's compatible with, as 
 ## WHAT TNTGEN IS
 TNTGEN was born out of the author's curiosity about how different Tunnels & Trolls character kindreds stack up against each other statistically. Also, account for different rules editions and optional rules. It can help to answer such questions that mankind had pondered for decades, such as:
 
-"If I roll up a bunch characters, one of each kindred, according to the 5th Edition T&T rules, how will their combat adds compare to each other?" 
+* "If I roll up a bunch characters, one of each kindred, according to the 5th Edition T&T rules, how will their combat adds, in aggregate, compare to each other?" 
 
-"Which percentage of dwarves in the Deluxe Edition of T&T will be created with a Strength of 30 or greater?"
+* "Which percentage of dwarves in the Deluxe Edition of T&T will be created with a Strength of 30 or greater?"
 
-"If I rolled up a billion fairies, in the Deluxe Edition of T&T, would even a single one be created with a Constitution score of at least 30? (Enough TARO - Triples Add and Reroll - rolls and it could theoretically happen, but fairies divide their CON by 4.)"
+* "What are the average combat adds for an Elf? And show me all (supported) editions."
 
-It is a command line program that simply takes some options as input, to indicate which Kindreds are of concern, which rules editions are used, how many character rolls should be made, etc. It outputs the totals for each attribute for the given combinations of kindred, rules editions and so on, in a delimited string format (CSV by default). 
+* "If I rolled up a billion fairies, in the Deluxe Edition of T&T, would even a single one be created with a Constitution score of at least 30? (Enough TARO - Triples Add and Reroll - rolls and it could theoretically happen, but fairies divide their CON by 4.)"
+
+It is a command line program that simply takes some options as input, to indicate which Kindreds are of concern, which rules editions are used, how many character rolls should be made, etc. It outputs the totals for each stat value, for the given combinations of kindred, rules editions and so on, in a delimited string format (CSV by default). 
 
 (See later in this doc for more info on all the options.)
 
 ## WHAT TNTGEN IS NOT
 TNTGEN is not a robust application with a graphical user interface. It is not (at this time) intended for rolling up a single character automatically. It does not deal with gold, equipment, spells and other fancy stuff. 
+
+TNTGEN does not *directly* answer all of the above questions. It generates many characters (you decide how many) and outputs *totals* aka *sums* for each *value* of the stats you're concerned with. So if you wanted to answer the aforementioned question about the average combat adds for an Elf, this program would give you the total number of times an Elf was rolled with 10 adds, with 9 adds, etc. for the given parameters. But it would not give you the average. You would have to find a way to calculate the average yourself (calculator, spreadsheet software, SQL database, etc.)
 
 ## HOW TO RUN THIS PROGRAM:
 
