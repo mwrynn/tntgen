@@ -23,6 +23,8 @@ OpenJDK 64-Bit Server VM Corretto-17.0.10.7.1 (build 17.0.10+7-LTS, mixed mode, 
 ```
 It may vary from the above, but the key things are 1) it didn't tell me command not found, so we have confirmed that Java is installed, and 2) we can see the version is 17.0.10 is installed, which is greater than 8. So we should be good to go.
 
+If you do NOT have Java installed, try downloading it from [here](https://www.java.com/en/download/manual.jsp).
+
 ### DOWNLOAD TNTGEN
 Version 0.1 is the current version. You can download it from: https://github.com/mwrynn/tntgen/releases/download/v0.1/tntgen-0.1.jar
 
