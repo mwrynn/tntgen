@@ -7,7 +7,7 @@ Written in Java 1.8, but not sure which other versions it's compatible with, as 
 ## WHAT TNTGEN IS
 TNTGEN was born out of the author's curiosity about how different Tunnels & Trolls character kindreds stack up against each other statistically. Also, account for different rules editions and optional rules. It can help to answer such questions that mankind had pondered for decades, such as:
 
-* "If I roll up a bunch characters, one of each kindred, according to the 5th Edition T&T rules, how will their combat adds, in aggregate, compare to each other?" 
+* "If I roll up a bunch of characters, for all kindreds available, according to the 5th Edition T&T rules, how will their combat adds, in aggregate, compare to each other?" 
 
 * "Which percentage of dwarves in the Deluxe Edition of T&T will be created with a Strength of 30 or greater?"
 
