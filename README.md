@@ -6,6 +6,35 @@ Written in Java 1.8, but not sure which other versions it's compatible with, as 
 
 ## HOW TO RUN THIS PROGRAM:
 
+There are one of two ways to run this program: download the binary and run it, or build it yourself and run it.
+
+## DOWNLOAD AND RUN TNTGEN:
+### PREREQUISITES:
+TNTGEN is a Java program, so you must have a Java Runtime Environment, version 8.0 or greater, installed on your machine. 
+To test whether you have a compatible Java version of it - installed, open your Command Prompt or Terminal and run:
+```
+java -version
+```
+The output should be something like:
+```
+openjdk version "17.0.10" 2024-01-16 LTS
+OpenJDK Runtime Environment Corretto-17.0.10.7.1 (build 17.0.10+7-LTS)
+OpenJDK 64-Bit Server VM Corretto-17.0.10.7.1 (build 17.0.10+7-LTS, mixed mode, sharing)
+```
+It may vary from the above, but the key things are 1) it didn't tell me command not found, so we have confirmed that Java is installed, and 2) we can see the version is 17.0.10 is installed, which is greater than 8. So we should be good to go.
+
+### DOWNLOAD TNTGEN
+Version 0.1 is the current version. You can download it from: https://github.com/mwrynn/tntgen/releases/download/v0.1/tntgen-0.1.jar
+
+### RUN TNTGEN
+1. Move tntgen-0.1.jar from your Downloads folder to wherever you'd like to keep it.
+2. Open your Command Prompt or Terminal.
+3. Navigate to the folder you plaved the jar file. (e.g. `cd \stuff`)
+4. Give it a test run by running the command: `java -jar tntgen-0.1.jar -r 10 -h -t -e FIFTH -k HUMAN,DWARF -s STR,ADDS`
+5. If you see output, then hooray, it worked! Now you can scroll to the bottom of this README to see the full set of options available.
+6. Have fun!
+
+## BUILDING TNTGEN YOURSELF:
 For now to run this program you must build it from the source code yourself. This may be new to you if you're not a programmer, but for now I have not attached a build to this github repo, so that's what we've got. :) 
 
 ### PREREQUISITES:
@@ -97,6 +126,9 @@ usage: tntgen
  -h,--header            output column headers
  -k,--kin <arg>         comma-separated list of the kindred to collect
                         stats for. See kin_conf.yaml for valid kin.
+ -n,--kin-conf <arg>    path to non-default kin_conf.yaml, which specified
+                        kin available, associated them with rules editions
+                        and defines attribute multipliers
  -o,--optional <arg>    comma-separated list of the optional rules to
                         apply. Valid optional rules at this time: NONE,LOW_REROLL
  -p,--parallel <arg>    number of parallel threads
@@ -191,4 +223,4 @@ FIFTH,NONE,HUMAN,STR,16,1
 execution time: 350 ms
 ```
 
-Enjoy!
+Enjoy! If you find any bugs or have any cool ideas for features/improvements, write to mwrynn-at-gmail-dot-com.
