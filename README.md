@@ -4,6 +4,16 @@ This is a tool used for Tunnels & Trolls, the second roleplaying game ever publi
   
 Written in Java 1.8, but not sure which other versions it's compatible with, as I haven't bothered to test that. I suspect the newest feature used is ThreadLocalRandom, which was introduced in JDK 7.
 
+## WHAT TNTGEN IS
+TNTGEN was born out of the author's curiosity about how different Tunnels & Trolls character kindreds stack up against each other statistically. Also, account for different rules editions and optional rules. It can help to answer such questions as, for example: "If roll up a million characters, one of each kindred, according to the 5th edition rules, how will their combat adds compare to each other?" 
+
+It is a command line program that simply takes some options as input, to indicate which Kindreds are of concern, which rules editions are used, how many character rolls should be made, etc. It outputs the totals for each attribute for the given combinations of kindred, rules editions and so on, in a delimited string format (CSV by default). 
+
+(See later in this doc for more info on all the options.)
+
+## WHAT TNTGEN IS NOT
+TNTGEN is not a robust application with a graphical user interface. It is not (at this time) intended for rolling up a single character automatically. It does not deal with gold, equipment, spells and other fancy stuff. 
+
 ## HOW TO RUN THIS PROGRAM:
 
 There are two ways to run this program: download the binary and run it, or build it yourself and run it.
