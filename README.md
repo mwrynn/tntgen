@@ -26,7 +26,7 @@ It may vary from the above, but the key things are 1) it didn't tell me command 
 If you do NOT have Java installed, try downloading it from [here](https://www.java.com/en/download/manual.jsp).
 
 ### DOWNLOAD TNTGEN
-Version 0.1 is the current version. You can download it from: https://github.com/mwrynn/tntgen/releases/download/v0.1/tntgen-0.1.jar
+Version 0.1 is the current version. You can download it from [here](https://github.com/mwrynn/tntgen/releases/download/v0.1/tntgen-0.1.jar) on Github.
 
 ### RUN TNTGEN
 1. Move tntgen-0.1.jar from your Downloads folder to wherever you'd like to keep it.
