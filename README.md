@@ -6,7 +6,7 @@ Written in Java 1.8, but not sure which other versions it's compatible with, as 
 
 ## HOW TO RUN THIS PROGRAM:
 
-There are one of two ways to run this program: download the binary and run it, or build it yourself and run it.
+There are two ways to run this program: download the binary and run it, or build it yourself and run it.
 
 ## DOWNLOAD AND RUN TNTGEN:
 ### PREREQUISITES:
