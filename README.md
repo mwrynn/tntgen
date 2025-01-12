@@ -22,7 +22,7 @@ It is a command line program that simply takes some options as input, to indicat
 ## WHAT TNTGEN IS NOT
 TNTGEN is not a robust application with a graphical user interface. It is not (at this time) intended for rolling up a single character automatically. It does not deal with gold, equipment, spells and other fancy stuff. 
 
-TNTGEN does not *directly* answer all of the above questions. It generates many characters (you decide how many) and outputs *totals* aka *sums* for each *value* of the stats you're concerned with. So if you wanted to answer the aforementioned question about the average combat adds for an Elf, this program would give you the total number of times an Elf was rolled with 10 adds, with 9 adds, etc. for the given parameters. But it would not give you the average. You would have to find a way to calculate the average yourself (calculator, spreadsheet software, SQL database, etc.)
+TNTGEN does not *directly* answer all of the above questions (see [WHAT TNTGEN](https://github.com/mwrynn/tntgen/?tab=readme-ov-file#what-tntgen-is) IS above). It generates many characters (you decide how many) and outputs *totals* aka *sums* for each *value* of the stats you're concerned with. So if you wanted to answer the aforementioned question about the average combat adds for an Elf, this program would give you the total number of times an Elf was rolled with 10 adds, with 9 adds, etc. for the given parameters. But it would not give you the average. You would have to find a way to calculate the average yourself (calculator, spreadsheet software, SQL database, etc.)
 
 ## HOW TO RUN THIS PROGRAM:
 
