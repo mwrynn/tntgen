@@ -19,12 +19,16 @@ It is a command line program that simply takes some options as input, to indicat
 
 Optionally, enable the "character output" mode, to output a single character's stats per line, instead of aggregated totals. 
 
+In short TNTGEN is for stats geeks.
+
 (See later in this doc for more info on all the options.)
 
 ## WHAT TNTGEN IS NOT
-TNTGEN is not a robust application with a graphical user interface. It only (at this time) generated and outputs the core attributes as well as combat adds. Although it can output one character's stats per line, it does not fully generate a single character, i.e. it does not deal with gold, equipment, spells, name your character, etc.
+TNTGEN is not a utility for character creation in a real game of T&T, nor is it a companion app that can help facilitate play in any way. TNTGEN is not a robust application with a graphical user interface. TNTGEN only (at this time) generates and outputs the core attributes as well as combat adds. Although it can output one character's stats per line, TNTGEN does not fully generate a single character, i.e. it does not generate gold, equipment, spells, name your character, etc.
 
-TNTGEN does not *directly* answer all of the above questions (see [WHAT TNTGEN IS](https://github.com/mwrynn/tntgen/?tab=readme-ov-file#what-tntgen-is) above). It generates many characters (you decide how many) and outputs *totals* aka *sums* for each *value* of the stats you're concerned with. So if you wanted to answer the aforementioned question about the average combat adds for an Elf, this program would give you the total number of times an Elf was rolled with 10 adds, with 9 adds, etc. for the given parameters. But it would not give you the average. You would have to find a way to calculate the average yourself (calculator, spreadsheet software, SQL database, etc.)
+TNTGEN does not *directly* answer all of the above questions (see [WHAT TNTGEN IS](https://github.com/mwrynn/tntgen/?tab=readme-ov-file#what-tntgen-is) above). It generates many characters (you decide how many) and outputs either *totals* (aka *sums*) for each *value* of the stats you're concerned with, or the individual stats at the character level.
+
+TNTGEN doesn't itself do fancy slicing and dicing of the data, and it doesn't provide any stats functions aside from summing. So if you wanted to answer the aforementioned question about the average combat adds for an Elf, this program could give you the total number of times an Elf was rolled with 10 adds, with 9 adds, etc. for the given parameters. But it would not give you the average. You would have to find a way to calculate the average yourself (calculator, spreadsheet software, SQL database, etc.)
 
 ## HOW TO RUN THIS PROGRAM:
 
