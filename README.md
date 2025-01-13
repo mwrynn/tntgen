@@ -249,7 +249,7 @@ execution time: 350 ms
 ```
 
 Optional kin configuration:
-You can specify a kindred configuration instead of using the internal default. The kindred configuration defines which kindred exist for which editions, and which attributes are multiplied by which factor 
+You can specify a kindred configuration instead of using the default, which can be found [here](https://github.com/mwrynn/tntgen/blob/master/src/main/resources/kin_conf.yaml). The kindred configuration defines which kindred exist for which editions, and which attributes are multiplied by which factor 
 
 This feature exists but complete documentation is a TODO
 
