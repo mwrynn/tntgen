@@ -143,7 +143,7 @@ More detailed info about the command line arguments available:
 
 ```
 usage: tntgen
- -??--help              display this usage text
+ -?,--help              display this usage text
  -c,--char-output       whether to output individual character stats or
                         aggregated stats; default is false (aggregated)
  -d,--delimiter <arg>   output field delimiter; default is ,
