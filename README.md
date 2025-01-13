@@ -43,18 +43,18 @@ openjdk version "17.0.10" 2024-01-16 LTS
 OpenJDK Runtime Environment Corretto-17.0.10.7.1 (build 17.0.10+7-LTS)
 OpenJDK 64-Bit Server VM Corretto-17.0.10.7.1 (build 17.0.10+7-LTS, mixed mode, sharing)
 ```
-It may vary from the above, but the key things are 1) it didn't tell me command not found, so we have confirmed that Java is installed, and 2) we can see the version is 17.0.10 is installed, which is greater than 8. So we should be good to go.
+It may vary from the above, but the key things are 1) it didn't tell me command not found, so we have confirmed that Java is installed, and 2) we can see the version is 17.0.10 is installed, which is >= 8. So we should be good to go.
 
 If you do NOT have Java installed, try downloading it from [here](https://www.java.com/en/download/manual.jsp).
 
 ### DOWNLOAD TNTGEN
-Version 0.1 is the current version. You can download it from [here](https://github.com/mwrynn/tntgen/releases/download/v0.1/tntgen-0.1.jar) on Github.
+You can download the latest version of TNTGEN (download .jar file) from [here](https://github.com/mwrynn/tntgen/releases/latest) on Github.
 
 ### RUN TNTGEN
-1. Move tntgen-0.1.jar from your Downloads folder to wherever you'd like to keep it.
+1. Move the tntgen jar file from your Downloads folder to wherever you'd like to keep it.
 2. Open your Command Prompt or Terminal.
 3. Navigate to the folder you plaved the jar file. (e.g. `cd \stuff`)
-4. Give it a test run by running the command: `java -jar tntgen-0.1.jar -r 10 -h -t -e FIFTH -k HUMAN,DWARF -s STR,ADDS`
+4. Give it a test run by running the command such as (replace the version number with the one for the file you downloaded): `java -jar tntgen-0.1.jar -r 10 -h -t -e FIFTH -k HUMAN,DWARF -s STR,ADDS`
 5. If you see output, then hooray, it worked! Now you can scroll to the bottom of this README to see the full set of options available.
 6. Have fun!
 
