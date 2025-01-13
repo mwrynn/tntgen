@@ -1,5 +1,6 @@
 package org.mwrynn.tnt;
 
+import org.apache.commons.cli.ParseException;
 import org.mwrynn.tnt.character.Character;
 import org.mwrynn.tnt.character.KinConf;
 import org.mwrynn.tnt.character.KinConfReader;
@@ -44,7 +45,7 @@ public class TntGen {
                 .stream()
                 .filter(k -> tntOptions.getKinList().contains(k.getKinName().toUpperCase()))
                 .filter(k -> tntOptions.getRulesEditionList().contains(k.getRulesEdition()))
-                .collect(Collectors.toList()); ;
+                .collect(Collectors.toList());
 
         for (OptionalRules optionalRules : tntOptions.getOptionalList()) {
             for (KinDef kinDef : applicableKinDefs) {
@@ -95,16 +96,14 @@ public class TntGen {
         Dice dice = new Dice(3);
         Roller roller = new Roller(rulesPlusKin.rulesEdition, rulesPlusKin.optionalRules, dice);
 
-        //for (int i = 0; i < tntOptions.getNumRolls(); i++) {
-            c.setStr(roller.rollAttribute(c.getStr()));
-            c.setDex(roller.rollAttribute(c.getDex()));
-            c.setCon(roller.rollAttribute(c.getCon()));
-            c.setSpd(roller.rollAttribute(c.getSpd()));
-            c.setIq(roller.rollAttribute(c.getIq()));
-            c.setLk(roller.rollAttribute(c.getLk()));
-            c.setChr(roller.rollAttribute(c.getChr()));
-            c.setWiz(roller.rollAttribute(c.getWiz()));
-        //}
+        c.setStr(roller.rollAttribute(c.getStr()));
+        c.setDex(roller.rollAttribute(c.getDex()));
+        c.setCon(roller.rollAttribute(c.getCon()));
+        c.setSpd(roller.rollAttribute(c.getSpd()));
+        c.setIq(roller.rollAttribute(c.getIq()));
+        c.setLk(roller.rollAttribute(c.getLk()));
+        c.setChr(roller.rollAttribute(c.getChr()));
+        c.setWiz(roller.rollAttribute(c.getWiz()));
     }
 
     private void collectAgg(Character c, RulesPlusKin rulesPlusKin) {
@@ -125,10 +124,17 @@ public class TntGen {
         final Set<RulesEdition> validRulesEditionSet = new HashSet<>(Arrays.asList(RulesEdition.values()));
 
         OptionsReader optionsReader = new OptionsReader(validOptionalRulesSet, validRulesEditionSet);
-        tntGen.tntOptions = optionsReader.parse(args);
-        if(tntGen.tntOptions == null) {
-            optionsReader.printHelp();
-            System.exit(1);
+
+        try {
+            tntGen.tntOptions = optionsReader.parse(args);
+        } catch (ParseException e) {
+            if (tntGen.tntOptions == null) {
+                tntGen.doHelpAndExit(optionsReader);
+            }
+        }
+
+        if (tntGen.tntOptions.getHelp()) {
+            tntGen.doHelpAndExit(optionsReader);
         }
 
         try {
@@ -156,5 +162,10 @@ public class TntGen {
 
             System.out.println("execution time: " + timeElapsed + " ms");
         }
+    }
+
+    private void doHelpAndExit(OptionsReader optionsReader) {
+        optionsReader.printHelp();
+        System.exit(1);
     }
 }

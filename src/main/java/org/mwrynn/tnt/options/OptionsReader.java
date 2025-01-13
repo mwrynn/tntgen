@@ -37,10 +37,11 @@ public class OptionsReader {
         this.validRulesEditionSet = validRulesEditionSet;
     }
 
-    public TntOptions parse(String[] args) {
+    public TntOptions parse(String[] args) throws ParseException {
+        options.addOption("?", "help",false, "display this usage text");
         options.addRequiredOption("r", "rolls", true,"number of rolls per combination of rules and kindred");
         options.addOption("t", "time",false, "display execution time");
-        options.addOption("p",  "parallel", true, "number of parallel threads");
+        options.addOption("p",  "parallel", true, "number of parallel threads; this is a performance option and does not affect the output");
         options.addOption("d",  "delimiter", true, "output field delimiter; default is ,");
 
         Option statsOption = new Option("s", "stats", true, "comma-separated list of the stats to collect " +
@@ -76,73 +77,69 @@ public class OptionsReader {
 
         TntOptions tntOptions = new TntOptions(validOptionalRulesSet, validRulesEditionSet);
 
-        try {
-            // parse the command line arguments
-            CommandLine line = parser.parse( options, args );
+        // parse the command line arguments
+        CommandLine line = parser.parse( options, args );
 
-            tntOptions.setNumRolls(Integer.valueOf(line.getOptionValue("rolls")));
-
-            // Handle the configuration path
-            if (line.hasOption("kin-conf")) {
-                tntOptions.setKinConfPath(line.getOptionValue("kin-conf"));
-            }
-
-            if (line.hasOption("parallel")) {
-                tntOptions.setNumThreads(Integer.valueOf(line.getOptionValue("parallel")));
-            } else {
-                tntOptions.setNumThreads(NUM_THREADS_DEFAULT);
-            }
-
-            if (line.hasOption("time")) {
-                tntOptions.setOutputTiming(true);
-            }
-
-            if (line.hasOption("delimiter")) {
-                tntOptions.setDelimiter((line.getOptionValue("delimiter")));
-            }
-
-            if (line.hasOption("stats")) {
-                List<String> stats = Arrays.asList(line.getOptionValues("stats"));
-                tntOptions.setStatNameList(stats);
-            } else {
-                tntOptions.addStatName(StatNames.ADDS);
-            }
-
-            if (line.hasOption("header")) {
-                tntOptions.setHeader(true);
-            }
-
-            if (line.hasOption("char-output")) {
-                tntOptions.setIsAggregatedOutput(false);
-            }
-
-            if (line.hasOption("kin")) {
-                List<String> kin = Arrays.asList(line.getOptionValues("kin"));
-                tntOptions.setKinList(kin);
-            }
-
-            if (line.hasOption("optional")) {
-                List<String> optionalRulesStrList = Arrays.asList(line.getOptionValues("optional"));
-                List<OptionalRules> optionalRulesList = new ArrayList<>();
-                for(String optionalRulesStr : optionalRulesStrList) {
-                    optionalRulesList.add(OptionalRules.valueOf(optionalRulesStr));
-                }
-                tntOptions.setOptionalList(optionalRulesList);
-            }
-
-            if (line.hasOption("edition")) {
-                List<String> rulesEditionStrList = Arrays.asList(line.getOptionValues("edition"));
-                List<RulesEdition> rulesEditionList = new ArrayList<>();
-                for(String rulesEditionStr : rulesEditionStrList) {
-                    rulesEditionList.add(RulesEdition.valueOf(rulesEditionStr));
-                }
-                tntOptions.setRulesEditionList(rulesEditionList);
-            }
-
+        if (line.hasOption("help")) {
+            return tntOptions;
         }
-        catch( ParseException exp ) {
-            exp.printStackTrace();
-            return null;
+
+        tntOptions.setNumRolls(Integer.valueOf(line.getOptionValue("rolls")));
+
+        if (line.hasOption("kin-conf")) {
+            tntOptions.setKinConfPath(line.getOptionValue("kin-conf"));
+        }
+
+        if (line.hasOption("parallel")) {
+            tntOptions.setNumThreads(Integer.valueOf(line.getOptionValue("parallel")));
+        } else {
+            tntOptions.setNumThreads(NUM_THREADS_DEFAULT);
+        }
+
+        if (line.hasOption("time")) {
+            tntOptions.setOutputTiming(true);
+        }
+
+        if (line.hasOption("delimiter")) {
+            tntOptions.setDelimiter((line.getOptionValue("delimiter")));
+        }
+
+        if (line.hasOption("stats")) {
+            List<String> stats = Arrays.asList(line.getOptionValues("stats"));
+            tntOptions.setStatNameList(stats);
+        } else {
+            tntOptions.addStatName(StatNames.ADDS);
+        }
+
+        if (line.hasOption("header")) {
+            tntOptions.setHeader(true);
+        }
+
+        if (line.hasOption("char-output")) {
+            tntOptions.setIsAggregatedOutput(false);
+        }
+
+        if (line.hasOption("kin")) {
+            List<String> kin = Arrays.asList(line.getOptionValues("kin"));
+            tntOptions.setKinList(kin);
+        }
+
+        if (line.hasOption("optional")) {
+            List<String> optionalRulesStrList = Arrays.asList(line.getOptionValues("optional"));
+            List<OptionalRules> optionalRulesList = new ArrayList<>();
+            for(String optionalRulesStr : optionalRulesStrList) {
+                optionalRulesList.add(OptionalRules.valueOf(optionalRulesStr));
+            }
+            tntOptions.setOptionalList(optionalRulesList);
+        }
+
+        if (line.hasOption("edition")) {
+            List<String> rulesEditionStrList = Arrays.asList(line.getOptionValues("edition"));
+            List<RulesEdition> rulesEditionList = new ArrayList<>();
+            for(String rulesEditionStr : rulesEditionStrList) {
+                rulesEditionList.add(RulesEdition.valueOf(rulesEditionStr));
+            }
+            tntOptions.setRulesEditionList(rulesEditionList);
         }
 
         return tntOptions;

@@ -6,6 +6,7 @@ import org.mwrynn.tnt.stat.StatNames;
 
 import java.util.*;
 
+// the state of options
 public class TntOptions {
     private int numRolls = 0;
     private int numThreads = 0;
@@ -27,6 +28,8 @@ public class TntOptions {
     private boolean isAggregatedOutput = true;
 
     private String kinConfPath;
+
+    private boolean help = false;
 
     public TntOptions() {
         validStatNames = new StatNames();
@@ -242,5 +245,13 @@ public class TntOptions {
                 throw new RuntimeException("invalid kin argument: " + kin);
             }
         }
+    }
+
+    public boolean getHelp() {
+        return help;
+    }
+
+    public void setHelp(boolean help) {
+        this.help = help;
     }
 }
