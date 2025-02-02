@@ -15,7 +15,7 @@ TNTGEN was born out of the author's curiosity about how different Tunnels & Trol
 
 * "If I rolled up a billion fairies, in the Deluxe Edition of T&T, would even a single one be created with a Constitution score of at least 40? (Enough TARO - Triples Add and Reroll - rolls and it could theoretically happen, but fairies divide their CON by 4.)" [I just tried this and the answer is...No! The highest CON rolled by a fairy was 36, which was rolled only a single time in a billion. -Mark W]
 
-It is a command line program that simply takes some options as input, to indicate which kindreds are of concern, which rules editions are used, how many character rolls should be made, etc. It outputs the totals for each stat value, for the given combinations of kindred, rules editions and so on, in a delimited string format (CSV by default). 
+TNTGEN is a command line program that simply takes some options as input, to indicate which kindreds are of concern, which rules editions are used, how many character rolls should be made, etc. It outputs the totals for each stat value, for the given combinations of kindred, rules editions and so on, in a delimited string format (CSV by default). 
 
 Optionally, enable the "character output" mode, to output a single character's stats per line, instead of aggregated totals. 
 
@@ -47,7 +47,7 @@ openjdk version "17.0.10" 2024-01-16 LTS
 OpenJDK Runtime Environment Corretto-17.0.10.7.1 (build 17.0.10+7-LTS)
 OpenJDK 64-Bit Server VM Corretto-17.0.10.7.1 (build 17.0.10+7-LTS, mixed mode, sharing)
 ```
-It may vary from the above, but the key things are 1) it didn't tell me command not found, so we have confirmed that Java is installed, and 2) we can see the version is 17.0.10 is installed, which is >= 8. So we should be good to go.
+The exact output you see on your computer may vary from the above, but the key things are 1) it didn't tell me "command not found" or similar error message, so we have confirmed that Java is installed, and 2) we can see the version is 17.0.10 is installed, which is >= 8. So we should be good to go.
 
 If you do NOT have Java installed, try downloading it from [here](https://www.java.com/en/download/manual.jsp).
 
@@ -63,7 +63,7 @@ You can download the latest version of TNTGEN (download .jar file) from [here](h
 6. Have fun!
 
 ## BUILDING TNTGEN YOURSELF:
-For now to run this program you must build it from the source code yourself. This may be new to you if you're not a programmer, but for now I have not attached a build to this github repo, so that's what we've got. :) 
+You may build TNTGEN from the source code yourself. This may be new to you if you're not a programmer, so if this seems to complicated, see DOWNLOAD TNTGEN above.
 
 ### PREREQUISITES:
 You need to have the JDK 8 or greater installed, and have Git and Maven installed.
